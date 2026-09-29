@@ -7,6 +7,10 @@ window.SITE = {
   langs: ["uz", "ru", "en"],
   defaultLang: "uz",
 
+  // true — haqiqiy ma'lumot yo'q bo'limlarda "samples" (namuna) ko'rsatiladi, "Namuna" belgisi bilan.
+  // Haqiqiy ma'lumot kiritilgan bo'limda namuna avtomatik ishlatilmaydi. Hammasi tayyor bo'lgach: false.
+  demo: true,
+
   brand: {
     name: "MUNIVAR",
     mark: "media/brand/mark.png",   // shaffof emblema (CSS orqali ranglanadi)
@@ -237,3 +241,61 @@ Object.assign(window.UI.en, {
   orderLeadOnline: "Bespoke tailoring to your measurements. Leave a request and we'll be in touch soon.",
   faqEyebrow: "FAQ", faqTitle: "Frequently asked questions", faqMore: "Didn't find your answer? Message us:"
 });
+
+/* =========================================================
+   NAMUNA MA'LUMOTLAR — faqat SITE.demo = true bo'lganda, haqiqiy
+   ma'lumot yo'q bo'limlarda "Namuna" belgisi bilan ko'rsatiladi.
+   Haqiqiy ma'lumotlar yuqoridagi showroom / reviews / faq ga yoziladi.
+   ========================================================= */
+window.SITE.samples = {
+  showroom: {
+    address: { uz: "Toshkent shahri (aniq manzil kiritiladi)", ru: "г. Ташкент (точный адрес будет добавлен)", en: "Tashkent (exact address to be added)" },
+    landmark: { uz: "Mo'ljal kiritiladi", ru: "Ориентир будет добавлен", en: "Landmark to be added" },
+    hours: { uz: "Du–Sha: 10:00–19:00", ru: "Пн–Сб: 10:00–19:00", en: "Mon–Sat: 10:00–19:00" },
+    lat: 41.3111, lng: 69.2797, mapLink: ""
+  },
+  reviews: [
+    { q: { uz: "Libos kutganimdan ham chiroyli chiqdi. Kashtalari juda nafis, to'yda hamma so'radi.",
+           ru: "Платье получилось даже красивее, чем я ожидала. Вышивка очень изящная — на свадьбе все спрашивали.",
+           en: "The dress turned out even more beautiful than I expected. The embroidery is so delicate — everyone asked about it." },
+      who: { uz: "Mijoz · Toshkent", ru: "Клиент · Ташкент", en: "Client · Tashkent" } },
+    { q: { uz: "O'lchovni online berdim, libos aynan qomatimga mos keldi. Rahmat, Muslima opa!",
+           ru: "Мерки передала онлайн, платье село идеально. Спасибо, Муслима!",
+           en: "I sent my measurements online and the dress fit perfectly. Thank you, Muslima!" },
+      who: { uz: "Mijoz · Samarqand", ru: "Клиент · Самарканд", en: "Client · Samarkand" } },
+    { q: { uz: "Mato sifati va tikilishi a'lo darajada. Keyingi bayramga yana buyurtma beraman.",
+           ru: "Качество ткани и пошива на высоте. К следующему празднику закажу снова.",
+           en: "Excellent fabric and tailoring. I'll order again for the next celebration." },
+      who: { uz: "Mijoz · Farg'ona", ru: "Клиент · Фергана", en: "Client · Fergana" } }
+  ],
+  // faq dagi savollar tartibida
+  faqAnswers: [
+    { uz: "Odatda 2–4 hafta. Aniq muddat model va bezak murakkabligiga bog'liq — konsultatsiyada aytamiz.",
+      ru: "Обычно 2–4 недели. Точный срок зависит от модели и сложности отделки — уточним на консультации.",
+      en: "Usually 2–4 weeks. The exact time depends on the design and embellishment — we'll confirm at the consultation." },
+    { uz: "Asosan buyurtma asosida tikamiz. Ayrim modellar tayyor holda ham bo'lishi mumkin — so'rang.",
+      ru: "В основном шьём на заказ. Некоторые модели могут быть в наличии — уточняйте.",
+      en: "We mainly make to order. Some designs may be available ready-made — just ask." },
+    { uz: "Showroomda o'lchov olamiz. Kela olmasangiz, o'lchov olish bo'yicha yo'riqnoma yuboramiz.",
+      ru: "Снимем мерки в шоуруме. Если не можете прийти — отправим инструкцию по снятию мерок.",
+      en: "We take measurements in the showroom. If you can't come, we'll send you a measuring guide." },
+    { uz: "Narx model, mato va bezakka qarab belgilanadi. Aniq narxni konsultatsiyada aytamiz.",
+      ru: "Цена зависит от модели, ткани и отделки. Точную стоимость назовём на консультации.",
+      en: "Pricing depends on the design, fabric and embellishment. We'll quote the exact price at the consultation." },
+    { uz: "Buyurtma oldindan to'lov bilan qabul qilinadi, qolgan qismi libos topshirilganda to'lanadi.",
+      ru: "Заказ принимается по предоплате, остаток — при получении платья.",
+      en: "Orders are confirmed with a deposit; the balance is paid on delivery." },
+    { uz: "Ha, O'zbekiston bo'ylab va chet elga yetkazib berish mumkin. Narxi va muddati manzilga bog'liq.",
+      ru: "Да, доставляем по Узбекистану и за рубеж. Стоимость и сроки зависят от адреса.",
+      en: "Yes, we deliver across Uzbekistan and abroad. Cost and timing depend on the destination." },
+    { uz: "Ha, rang, mato va bichimni siz bilan kelishgan holda o'zgartirish mumkin.",
+      ru: "Да, цвет, ткань и крой можно изменить по согласованию с вами.",
+      en: "Yes, the colour, fabric and cut can be adjusted in agreement with you." },
+    { uz: "Ha, topshirishda libos qaddi-qomatingizga moslab beriladi.",
+      ru: "Да, при примерке платье подгоняется по вашей фигуре.",
+      en: "Yes, at the fitting the dress is adjusted to your figure." }
+  ]
+};
+window.UI.uz.sample = "Namuna";
+window.UI.ru.sample = "Пример";
+window.UI.en.sample = "Sample";

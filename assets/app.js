@@ -4,6 +4,19 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const C = S.contacts;
+
+  // demo rejimi: haqiqiy ma'lumot yo'q bo'limlarga namuna qo'yiladi va belgilanadi
+  const sampleSecs = [];
+  if (S.demo && S.samples) {
+    const sm = S.samples;
+    const has = (o) => !!(o && (o.uz || o.ru || o.en));
+    if (!has(S.showroom && S.showroom.address) && sm.showroom) { S.showroom = sm.showroom; sampleSecs.push('showroom'); }
+    if (!S.reviews.length && sm.reviews) { S.reviews = sm.reviews; sampleSecs.push('reviews'); }
+    if (!S.faq.some((f) => has(f.a)) && sm.faqAnswers) {
+      S.faq.forEach((f, i) => { if (sm.faqAnswers[i]) f.a = sm.faqAnswers[i]; });
+      sampleSecs.push('faq');
+    }
+  }
   const tel = (p) => 'tel:' + p.replace(/[^\d+]/g, '');
   const links = {
     ig: C.instagram && `https://www.instagram.com/${C.instagram}/`,
@@ -154,6 +167,10 @@
     $$('[data-ui-aria]').forEach((el) => el.setAttribute('aria-label', U[el.dataset.uiAria]));
     $$('[data-ui-ph]').forEach((el) => (el.placeholder = U[el.dataset.uiPh]));
     if (!hasShowroom) $('[data-ui="orderLead"]').textContent = U.orderLeadOnline;
+    sampleSecs.forEach((id) => {
+      const eb = $(`#${id} .eyebrow`);
+      if (eb) eb.insertAdjacentHTML('beforeend', ` <span class="sample-tag">${esc(U.sample)}</span>`);
+    });
 
     const ids = ['#looks', '#craft', '#founder', '#order'];
     $$('[data-navlinks]').forEach((n) => (n.innerHTML = U.nav.map((t, i) => `<a href="${ids[i]}">${esc(t)}</a>`).join('')));
