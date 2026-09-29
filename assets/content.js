@@ -97,12 +97,20 @@ window.SITE = {
 
   founder: {
     name: { uz: "Muslima To'lqunova", ru: "Муслима Тулкунова", en: "Muslima Tulkunova" },
-    photo: "",   // masalan: "media/brand/founder.webp" — bo'sh bo'lsa emblema ko'rsatiladi
-    role: { uz: "Brend asoschisi va dizayneri", ru: "Основатель и дизайнер бренда", en: "Founder & designer" },
+    photo: "",   // asoschi surati bo'lsa: "media/brand/founder.webp" — dizayner kartochkasida chiqadi
+    // Bo'lim kompozitsiyasi: katta rasm + kichik detal
+    images: ["media/looks/look-13-1400.webp", "media/craft/gullar.webp"],
+    role: { uz: "Asoschi va dizayner", ru: "Основатель и дизайнер", en: "Founder & designer" },
+    exp: { uz: "Modada 11 yillik tajriba", ru: "11 лет в моде", en: "11 years in fashion" },
+    about: {
+      uz: "MUNIVAR — zamonaviy ayolning nafisligi, didi va individualligini ifodalovchi premium liboslar brendi.",
+      ru: "MUNIVAR — премиальный бренд одежды, выражающий изящество, вкус и индивидуальность современной женщины.",
+      en: "MUNIVAR is a premium womenswear brand expressing the elegance, taste and individuality of the modern woman."
+    },
     bio: {
-      uz: "MUNIVAR — zamonaviy ayolning nafisligi, didi va individualligini ifodalovchi premium liboslar brendi. Brend asoschisi va dizayneri Muslima To'lqunova moda sohasida 11 yillik professional tajribaga ega. Har bir kolleksiya uning tajribasi, ijodiy qarashlari va ayol go'zalligiga bo'lgan yondashuvi asosida yaratiladi.",
-      ru: "MUNIVAR — премиальный бренд одежды, выражающий изящество, вкус и индивидуальность современной женщины. Основатель и дизайнер бренда Муслима Тулкунова имеет 11 лет профессионального опыта в моде. Каждая коллекция создаётся на основе её опыта, творческого видения и подхода к женской красоте.",
-      en: "MUNIVAR is a premium womenswear brand expressing the elegance, taste and individuality of the modern woman. Founder and designer Muslima Tulkunova brings 11 years of professional experience in fashion. Every collection grows from her experience, creative vision and approach to feminine beauty."
+      uz: "Har bir kolleksiya dizayner Muslima To'lqunovaning tajribasi, ijodiy qarashlari va ayol go'zalligiga bo'lgan yondashuvi asosida yaratiladi.",
+      ru: "Каждая коллекция создаётся на основе опыта, творческого видения и подхода к женской красоте дизайнера Муслимы Тулкуновой.",
+      en: "Every collection is shaped by designer Muslima Tulkunova's experience, creative vision and approach to feminine beauty."
     },
     motto: {
       uz: "Har bir libosda o'ziga xoslik, har bir ayolda betakrorlik.",

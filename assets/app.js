@@ -72,9 +72,16 @@
   });
 
   // founder
-  const fm = $('[data-founder-photo]');
-  if (S.founder.photo) fillImg(fm, S.founder.photo, '');
-  else fm.innerHTML = '<div class="founder__emblem"><span class="mark"></span></div>';
+  const [bigImg, detailImg] = S.founder.images || [];
+  $('[data-founder-art]').innerHTML =
+    `<div class="founder__big"></div>` +
+    (detailImg ? `<div class="founder__detail"></div>` : '') +
+    `<span class="founder__badge"><span class="mark"></span></span>`;
+  fillImg($('.founder__big'), bigImg, 'MUNIVAR');
+  if (detailImg) fillImg($('.founder__detail'), detailImg, '');
+  const ava = $('[data-founder-ava]');
+  if (S.founder.photo) fillImg(ava, S.founder.photo, L(S.founder.name));
+  else ava.innerHTML = '<span class="mark"></span>';
   const fig = $('[data-founder-ig]');
   if (links.ig) fig.href = links.ig; else fig.remove();
 

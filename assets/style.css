@@ -192,15 +192,32 @@ body.menu-open{overflow:hidden}
 .review blockquote{margin:0;font-size:14.5px;line-height:1.6}
 .review figcaption{margin-top:14px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
 
-/* FOUNDER */
-.founder{display:grid;gap:26px;align-items:center}
-@media (min-width:900px){.founder{grid-template-columns:.85fr 1fr;gap:56px}}
-.founder__role{margin:12px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-.founder__bio{margin:16px 0 18px;max-width:min(56ch,100%);color:var(--soft);font-size:15px}
-.founder__motto{margin:0 0 26px;padding-left:16px;border-left:2px solid var(--gold);font-size:17px;font-style:italic;max-width:44ch}
-.founder__media>img,.founder__media .ph{width:100%;aspect-ratio:3/4;object-fit:cover}
-.founder__emblem{aspect-ratio:3/4;display:grid;place-items:center;background:var(--gold);color:var(--ink-2)}
-.founder__emblem .mark{width:46%}
+/* FOUNDER — brend hikoyasi */
+.founder{display:grid;gap:44px;align-items:center}
+@media (min-width:900px){.founder{grid-template-columns:1fr 1fr;gap:clamp(48px,6vw,96px)}}
+
+.founder__art{position:relative;padding:0 14% 12% 0}
+.founder__art::before{content:"";position:absolute;inset:6% 6% 4% 8%;border:1px solid var(--gold);pointer-events:none}
+.founder__big{position:relative;aspect-ratio:4/5;overflow:hidden}
+.founder__big img{object-position:50% 12%}
+.founder__detail{position:absolute;right:0;bottom:0;width:44%;aspect-ratio:4/5;overflow:hidden;border:6px solid var(--paper);box-shadow:0 18px 40px rgba(28,34,20,.18)}
+.founder__badge{position:absolute;left:-14px;top:-14px;width:76px;height:76px;border-radius:50%;background:var(--gold);color:var(--ink-2);display:grid;place-items:center;box-shadow:0 0 0 6px var(--paper)}
+.founder__badge .mark{height:44px}
+@media (min-width:900px){.founder__badge{width:92px;height:92px;left:-22px;top:-22px}.founder__badge .mark{height:54px}}
+
+.founder__brand{margin:0;font-weight:200;font-size:clamp(34px,6vw,60px);letter-spacing:.2em;line-height:1.05}
+.founder__about{margin:18px 0 0;font-size:clamp(18px,1.9vw,22px);font-weight:300;line-height:1.45;max-width:30ch}
+.founder__bio{margin:16px 0 0;max-width:min(48ch,100%);color:var(--soft);font-size:15px}
+
+.designer{display:flex;align-items:center;gap:16px;margin:28px 0;padding:18px 0;border-block:1px solid var(--line)}
+.designer__ava{flex:0 0 auto;width:60px;height:60px;border-radius:50%;overflow:hidden;background:var(--ink-2);color:var(--gold-soft);display:grid;place-items:center}
+.designer__ava .mark{height:34px}
+.designer__ava img{width:100%;height:100%;object-fit:cover}
+.designer__name{margin:0;font-size:17px;font-weight:400;letter-spacing:.03em}
+.designer__role{margin:3px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+
+.founder__motto{position:relative;margin:0 0 28px;padding:4px 0 0 44px;font-size:clamp(17px,1.7vw,20px);font-style:italic;font-weight:300;line-height:1.5;max-width:36ch}
+.founder__motto::before{content:"\201C";position:absolute;left:0;top:-4px;font-family:Georgia,serif;font-size:60px;font-style:normal;line-height:1;color:var(--gold)}
 
 /* ORDER */
 .order{position:relative;background:var(--ink);color:#fff;padding-block:clamp(54px,9vw,110px);overflow:hidden}
