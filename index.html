@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MUNIVAR — Nafosat va o'ziga xoslik</title>
+<meta name="description" content="MUNIVAR — zamonaviy ayolning nafisligi, didi va individualligini ifodalovchi premium liboslar brendi.">
+<meta name="theme-color" content="#1f2616">
+<meta property="og:title" content="MUNIVAR — Nafosat va o'ziga xoslik">
+<meta property="og:description" content="Premium ayollar liboslari brendi. Dizayner Muslima To'lqunova.">
+<meta property="og:image" content="media/video/hero-poster.jpg">
+<link rel="icon" href="media/brand/logo-square.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav nav--over" id="nav">
+  <a class="nav__logo" href="#hero" aria-label="MUNIVAR"><span class="mark"></span><span class="nav__word">MUNIVAR</span></a>
+  <nav class="nav__links" data-navlinks></nav>
+  <div class="lang lang--desk" data-lang></div>
+  <button class="burger" type="button" data-ui-aria="menu"><span></span><span></span><span></span></button>
+</header>
+
+<div class="drawer" id="drawer">
+  <div data-navlinks></div>
+  <div class="lang lang--drawer" data-lang></div>
+  <div class="drawer__foot" data-socials></div>
+</div>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="hero__poster" data-poster></div>
+    <video muted playsinline loop preload="metadata" data-hero-video></video>
+    <button class="hero__sound" type="button" data-ui-aria="sound">
+      <svg class="snd-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="m17 9 4 6M21 9l-4 6"/></svg>
+      <svg class="snd-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+    </button>
+    <div class="hero__body">
+      <p class="hero__kicker rv" data-t="hero.kicker"></p>
+      <h1 class="hero__title rv">
+        <span class="hero__mark mark"></span>
+        <span class="hero__brand">MUNIVAR</span>
+        <em data-t="brand.tagline"></em>
+      </h1>
+      <p class="hero__lead rv" data-t="hero.lead"></p>
+      <div class="hero__cta rv">
+        <a class="btn btn--gold" href="#" data-open-order data-ui="order"></a>
+        <a class="btn btn--ghost" href="#looks" data-ui="seeCollection"></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust" data-trust></section>
+
+  <section class="sec" id="stars" hidden>
+    <div class="wrap sec__head rv">
+      <p class="eyebrow" data-ui="starsEyebrow"></p>
+      <h2 class="sec__title" data-ui="starsTitle"></h2>
+    </div>
+    <div class="stars" data-stars></div>
+    <div class="rail-nav" data-for="stars"></div>
+  </section>
+
+  <section class="sec sec--tint" id="looks">
+    <div class="wrap sec__head rv">
+      <p class="eyebrow" data-ui="looksEyebrow"></p>
+      <h2 class="sec__title" data-ui="looksTitle"></h2>
+      <p class="sec__lead" data-ui="looksLead"></p>
+    </div>
+    <div class="lcats wrap rv" data-lcats></div>
+    <div class="rail" data-looks></div>
+    <div class="rail-nav" data-for="looks"></div>
+    <p class="rail__hint wrap" data-ui="swipe"></p>
+  </section>
+
+  <section class="sec" id="craft">
+    <div class="wrap">
+      <div class="sec__head rv">
+        <p class="eyebrow" data-ui="craftEyebrow"></p>
+        <h2 class="sec__title" data-ui="craftTitle"></h2>
+      </div>
+      <div class="craft" data-craft></div>
+    </div>
+  </section>
+
+  <section class="sec sec--tint">
+    <div class="wrap">
+      <div class="sec__head rv"><p class="eyebrow" data-ui="occEyebrow"></p></div>
+      <ul class="occasions" data-occasions></ul>
+    </div>
+  </section>
+
+  <section class="sec" id="reviews" hidden>
+    <div class="wrap">
+      <div class="sec__head rv">
+        <p class="eyebrow" data-ui="revEyebrow"></p>
+        <h2 class="sec__title" data-ui="revTitle"></h2>
+      </div>
+      <div class="reviews" data-reviews></div>
+    </div>
+  </section>
+
+  <section class="sec" id="founder">
+    <div class="wrap founder">
+      <div class="founder__media rv" data-founder-photo></div>
+      <div class="rv">
+        <p class="eyebrow" data-ui="founderEyebrow"></p>
+        <h2 class="sec__title" data-t="founder.name"></h2>
+        <p class="founder__role" data-t="founder.role"></p>
+        <p class="founder__bio" data-t="founder.bio"></p>
+        <p class="founder__motto" data-t="founder.motto"></p>
+        <a class="btn-line" target="_blank" rel="noopener" data-founder-ig data-ui="ig"></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="order" id="order">
+    <div class="wrap order__inner">
+      <span class="order__mark mark rv"></span>
+      <p class="order__eyebrow rv" data-ui="orderEyebrow"></p>
+      <h2 class="order__title rv" data-ui="orderTitle"></h2>
+      <p class="order__lead rv" data-ui="orderLead"></p>
+      <a class="btn btn--gold btn--lg rv" href="#" data-open-order data-ui="consult"></a>
+      <div class="chans" data-chans></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span class="foot__mark mark"></span>
+  <p class="foot__logo">MUNIVAR</p>
+  <p class="foot__desc" data-ui="footDesc"></p>
+  <p class="foot__meta" data-ui="footMeta"></p>
+  <p class="foot__copy">© <span data-year></span> MUNIVAR</p>
+</footer>
+
+<a class="cta-fab" href="#" data-open-order data-ui="order"></a>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal__sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal__x" type="button" data-ui-aria="close">×</button>
+    <p class="modal__eyebrow">MUNIVAR</p>
+    <h3 class="modal__title" id="mTitle" data-ui="consult"></h3>
+    <p class="modal__intro" data-ui="mIntro"></p>
+    <form id="orderForm" novalidate>
+      <fieldset class="field">
+        <legend class="field__q" data-ui="qType"></legend>
+        <div class="choice">
+          <label class="choice__i"><input type="radio" name="type" value="online"><span data-ui="tOnline"></span></label>
+          <label class="choice__i"><input type="radio" name="type" value="showroom"><span data-ui="tVisit"></span></label>
+        </div>
+      </fieldset>
+      <label class="field"><span class="field__q" data-ui="qName"></span>
+        <input class="field__in" name="name" autocomplete="name" data-ui-ph="pName">
+      </label>
+      <label class="field"><span class="field__q" data-ui="qPhone"></span>
+        <span class="phone">
+          <select class="phone__cc" name="cc">
+            <option>+998</option><option>+7</option><option>+992</option><option>+996</option><option>+993</option><option>+994</option><option>+971</option><option>+966</option><option>+90</option><option>+1</option><option>+44</option><option>+49</option>
+          </select>
+          <input class="field__in phone__num" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67">
+        </span>
+      </label>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn-send" type="submit" data-ui="send"></button>
+      <p class="form__msg" aria-live="polite"></p>
+      <p class="form__alt"><span data-ui="alt"></span> <a data-tel></a></p>
+    </form>
+  </div>
+</div>
+
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
