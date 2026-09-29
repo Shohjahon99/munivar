@@ -7,7 +7,7 @@
   const tel = (p) => 'tel:' + p.replace(/[^\d+]/g, '');
   const links = {
     ig: C.instagram && `https://www.instagram.com/${C.instagram}/`,
-    tg: C.telegram && `https://t.me/${C.telegram}`,
+    tg: C.telegram && (/^https?:/.test(C.telegram) ? C.telegram : `https://t.me/${C.telegram}`),
     wa: C.whatsapp && `https://wa.me/${C.whatsapp}`
   };
 
@@ -95,7 +95,7 @@
   function renderChans() {
     const list = C.phones.map((p) => ['tel', U.phone, p, tel(p)]);
     if (links.ig) list.push(['ig', 'Instagram', '@' + C.instagram, links.ig]);
-    if (links.tg) list.push(['tg', 'Telegram', '@' + C.telegram, links.tg]);
+    if (links.tg) list.push(['tg', 'Telegram', /^https?:/.test(C.telegram) ? L(C.telegramLabel) : '@' + C.telegram, links.tg]);
     if (links.wa) list.push(['wa', 'WhatsApp', C.phones[0], links.wa]);
     $('[data-chans]').innerHTML = list.map(([k, n, v, h]) =>
       `<a class="chan rv in" href="${esc(h)}" ${k === 'tel' ? '' : 'target="_blank" rel="noopener"'}><span class="chan__i">${ico[k]}</span><span class="chan__t"><span class="chan__k">${esc(n)}</span><span class="chan__v">${esc(v)}</span></span></a>`).join('');

@@ -17,7 +17,8 @@ window.SITE = {
   contacts: {
     phones: ["+998 90 126 25 80", "+998 98 126 25 80"],
     instagram: "muslimam_libas",
-    telegram: "",          // masalan: "munivar_uz" — bo'sh bo'lsa ko'rsatilmaydi
+    telegram: "https://t.me/+baVhchzzcPBmYzky",   // username yoki to'liq havola
+    telegramLabel: { uz: "MUNIVAR kanali", ru: "Канал MUNIVAR", en: "MUNIVAR channel" },
     whatsapp: ""           // masalan: "998901262580"
   },
 
