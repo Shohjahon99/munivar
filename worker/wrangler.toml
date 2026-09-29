@@ -1,0 +1,11 @@
+name = "munivar-order"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Formani yubora oladigan sayt manzillari (domen ulansa, shu yerga qo'shiladi)
+ALLOWED_ORIGINS = "https://shohjahon99.github.io,http://localhost:5173"
+
+# BOT_TOKEN va CHAT_ID maxfiy — bu faylga yozilmaydi:
+#   npx wrangler secret put BOT_TOKEN
+#   npx wrangler secret put CHAT_ID

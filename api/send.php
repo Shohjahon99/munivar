@@ -25,6 +25,7 @@ $name  = $clean($in['name'] ?? '', 80);
 $phone = $clean($in['phone'] ?? '', 30);
 $type  = $clean($in['type'] ?? '', 40);
 $lang  = $clean($in['lang'] ?? '', 5);
+$look  = $clean($in['look'] ?? '', 12);
 
 if (mb_strlen($name) < 2 || strlen(preg_replace('/\D/', '', $phone)) < 7) {
     http_response_code(422);
@@ -44,6 +45,7 @@ $text = "🛍 <b>Yangi ariza — MUNIVAR</b>\n\n"
       . "👤 <b>Ism:</b> " . $h($name) . "\n"
       . "📞 <b>Telefon:</b> " . $h($phone) . "\n"
       . "📍 <b>Turi:</b> " . $h($type) . "\n"
+      . ($look !== '' ? "👗 <b>Libos:</b> " . $h($look) . "\n" : '')
       . "🌐 <b>Til:</b> " . $h(strtoupper($lang)) . "\n"
       . "🕒 " . date('d.m.Y H:i');
 

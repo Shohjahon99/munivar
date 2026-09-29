@@ -39,8 +39,9 @@
   /* ---------- statik qismlar (bir marta) ---------- */
   const looksEl = $('[data-looks]');
   const starsEl = $('[data-stars]');
+  const lookCode = (n) => `MV-${n}`;
   looksEl.innerHTML = S.looks.items.map((l, i) =>
-    `<div class="rail__item rv" data-cat="${esc(l.cat)}"><div class="rail__media" data-i="${i}"></div></div>`).join('');
+    `<div class="rail__item rv" data-cat="${esc(l.cat)}"><div class="rail__media" data-i="${i}"><span class="rail__code">${esc(lookCode(l.img))}</span></div></div>`).join('');
   $$('.rail__media', looksEl).forEach((b) => {
     const n = S.looks.items[b.dataset.i].img;
     fillImg(b, `media/looks/look-${n}-700.webp`, 'MUNIVAR', `media/looks/look-${n}-700.webp 700w, media/looks/look-${n}-1400.webp 1400w`);
@@ -102,9 +103,43 @@
     $('[data-socials]').innerHTML = [links.ig && `<a href="${links.ig}" target="_blank" rel="noopener">Instagram</a>`,
       links.tg && `<a href="${links.tg}" target="_blank" rel="noopener">Telegram</a>`,
       `<a href="${tel(C.phones[0])}">${esc(C.phones[0])}</a>`].filter(Boolean).join('');
-    const t = $('[data-tel]');
-    t.href = tel(C.phones[0]);
-    t.textContent = C.phones[0];
+    $$('[data-tel]').forEach((t) => { t.href = tel(C.phones[0]); t.textContent = C.phones[0]; });
+  }
+
+  /* ---------- showroom ---------- */
+  const SR = S.showroom || {};
+  const hasShowroom = !!(SR.address && (SR.address.uz || SR.address.ru || SR.address.en));
+  const mapLink = SR.mapLink || (SR.lat && SR.lng ? `https://yandex.uz/maps/?pt=${SR.lng},${SR.lat}&z=17&l=map` : '');
+  if (hasShowroom && SR.lat && SR.lng) {
+    $('[data-map]').innerHTML = `<iframe title="Showroom" loading="lazy" src="https://yandex.uz/map-widget/v1/?ll=${SR.lng},${SR.lat}&z=16&pt=${SR.lng},${SR.lat},pm2dgl" allowfullscreen></iframe>`;
+  } else {
+    $('[data-map]').remove();
+  }
+  if (!mapLink) $('[data-map-link]').remove(); else $('[data-map-link]').href = mapLink;
+  if (!hasShowroom) {
+    // showroom yo'q — formada tashrif varianti ham ko'rinmaydi, faqat online buyurtma
+    $('[data-type-field]').hidden = true;
+    $('#orderForm').type[0].checked = true;
+  }
+  function renderShowroom() {
+    $('#showroom').hidden = !hasShowroom;
+    if (!hasShowroom) return;
+    const rows = [[U.addr, L(SR.address)], [U.landmarkL, L(SR.landmark)], [U.hoursL, L(SR.hours)]].filter(([, v]) => v);
+    $('[data-showroom-list]').innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+    const ms = $('[data-modal-showroom]');
+    ms.hidden = false;
+    ms.textContent = `${U.showEyebrow}: ${L(SR.address)}${L(SR.hours) ? ' · ' + L(SR.hours) : ''}`;
+  }
+
+  /* ---------- savol-javob ---------- */
+  function renderFaq() {
+    const items = (S.faq || []).filter((f) => L(f.a));
+    $('#faq').hidden = !items.length;
+    $('[data-faq]').innerHTML = items.map((f, i) => `
+      <details class="faq__i"${i ? '' : ' open'}>
+        <summary>${esc(L(f.q))}<span class="faq__pm" aria-hidden="true"></span></summary>
+        <div class="faq__a">${esc(L(f.a))}</div>
+      </details>`).join('');
   }
 
   /* ---------- tilga bog'liq qismlar ---------- */
@@ -118,6 +153,7 @@
     $$('[data-ui]').forEach((el) => (el.textContent = U[el.dataset.ui]));
     $$('[data-ui-aria]').forEach((el) => el.setAttribute('aria-label', U[el.dataset.uiAria]));
     $$('[data-ui-ph]').forEach((el) => (el.placeholder = U[el.dataset.uiPh]));
+    if (!hasShowroom) $('[data-ui="orderLead"]').textContent = U.orderLeadOnline;
 
     const ids = ['#looks', '#craft', '#founder', '#order'];
     $$('[data-navlinks]').forEach((n) => (n.innerHTML = U.nav.map((t, i) => `<a href="${ids[i]}">${esc(t)}</a>`).join('')));
@@ -144,10 +180,17 @@
       </article>`).join('');
 
     $('#reviews').hidden = !S.reviews.length;
-    $('[data-reviews]').innerHTML = S.reviews.map((r) =>
-      `<figure class="review"><blockquote>${esc(L(r.q))}</blockquote><figcaption>${esc(L(r.who))}</figcaption></figure>`).join('');
+    $('[data-reviews]').innerHTML = S.reviews.map((r) => r.shot
+      ? `<figure class="review review--shot"><img src="${esc(r.shot)}" alt="${esc(U.revTitle)}" loading="lazy" decoding="async"></figure>`
+      : `<figure class="review">
+          <blockquote>${esc(L(r.q))}</blockquote>
+          <figcaption>${r.photo ? `<img class="review__ava" src="${esc(r.photo)}" alt="" loading="lazy">` : ''}<span>${esc(L(r.who))}</span></figcaption>
+        </figure>`).join('');
 
     renderChans();
+    renderShowroom();
+    renderFaq();
+    if (pickCode) $('[data-pick-name]').textContent = `${U.lookLabel} ${pickCode}`;
     updNav();
   }
 
@@ -221,15 +264,22 @@
   /* ---------- lightbox ---------- */
   const lb = document.createElement('div');
   lb.className = 'lb';
-  lb.innerHTML = '<img alt=""><button class="lb__x" data-ui-aria="close">×</button><button class="lb__p" data-ui-aria="prev">‹</button><button class="lb__n" data-ui-aria="next">›</button>';
+  lb.innerHTML = '<img alt=""><button class="lb__x" data-ui-aria="close">×</button><button class="lb__p" data-ui-aria="prev">‹</button><button class="lb__n" data-ui-aria="next">›</button>' +
+    '<div class="lb__bar"><span class="lb__code"></span><button class="btn btn--gold lb__ask" type="button" data-ui="askLook"></button></div>';
   document.body.appendChild(lb);
   let cur = [], ci = 0;
-  const showLb = () => { $('img', lb).src = cur[ci]; };
+  const showLb = () => {
+    $('img', lb).src = cur[ci].src;
+    $('.lb__code', lb).textContent = cur[ci].code;
+  };
   looksEl.addEventListener('click', (e) => {
     const m = e.target.closest('.rail__media.has-img');
     if (!m) return;
     const vis = $$('.rail__item:not([hidden]) .rail__media.has-img', looksEl);
-    cur = vis.map((x) => `media/looks/look-${S.looks.items[x.dataset.i].img}-1400.webp`);
+    cur = vis.map((x) => {
+      const n = S.looks.items[x.dataset.i].img;
+      return { src: `media/looks/look-${n}-1400.webp`, thumb: `media/looks/look-${n}-700.webp`, code: lookCode(n) };
+    });
     ci = vis.indexOf(m);
     showLb();
     lb.classList.add('on');
@@ -258,6 +308,23 @@
     setTimeout(() => (modal.hidden = true), 350);
   };
   document.addEventListener('click', (e) => { if (e.target.closest('[data-open-order]')) openModal(e); });
+
+  // tanlangan libos (lightbox → "Shu libosni so'rash")
+  let pickCode = '';
+  const pickBox = $('[data-pick]');
+  function setPick(code, thumb) {
+    pickCode = code || '';
+    pickBox.hidden = !pickCode;
+    if (!pickCode) return;
+    $('[data-pick-img]').src = thumb;
+    $('[data-pick-name]').textContent = `${U.lookLabel} ${pickCode}`;
+  }
+  $('[data-pick-x]').onclick = () => setPick('');
+  $('.lb__ask', lb).onclick = () => {
+    setPick(cur[ci].code, cur[ci].thumb);
+    closeLb();
+    openModal();
+  };
   $('.modal__x').onclick = closeModal;
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
   addEventListener('keydown', (e) => {
@@ -291,7 +358,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: type === 'online' ? window.UI.uz.tOnline : window.UI.uz.tVisit,
-          name, phone: `${form.cc.value} ${phone}`, lang, website: form.website.value, page: location.href
+          name, phone: `${form.cc.value} ${phone}`, look: pickCode, lang, website: form.website.value, page: location.href
         })
       });
       const j = await r.json().catch(() => ({}));
@@ -299,6 +366,8 @@
       msg.className = 'form__msg ok';
       msg.textContent = U.ok;
       form.reset();
+      setPick('');
+      if (!hasShowroom) form.type[0].checked = true;
     } catch (err) {
       msg.className = 'form__msg err';
       msg.textContent = `${U.errSend} ${C.phones[0]}`;

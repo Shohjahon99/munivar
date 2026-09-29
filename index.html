@@ -124,6 +124,29 @@
     </div>
   </section>
 
+  <section class="sec sec--tint" id="faq" hidden>
+    <div class="wrap faq-wrap">
+      <div class="sec__head rv">
+        <p class="eyebrow" data-ui="faqEyebrow"></p>
+        <h2 class="sec__title" data-ui="faqTitle"></h2>
+        <p class="sec__lead"><span data-ui="faqMore"></span> <a class="faq__tel" data-tel></a></p>
+      </div>
+      <div class="faq" data-faq></div>
+    </div>
+  </section>
+
+  <section class="sec" id="showroom" hidden>
+    <div class="wrap showroom">
+      <div class="showroom__info rv">
+        <p class="eyebrow" data-ui="showEyebrow"></p>
+        <h2 class="sec__title" data-ui="showTitle"></h2>
+        <dl class="showroom__list" data-showroom-list></dl>
+        <a class="btn btn--dark" target="_blank" rel="noopener" data-map-link data-ui="route"></a>
+      </div>
+      <div class="showroom__map rv" data-map></div>
+    </div>
+  </section>
+
   <section class="order" id="order">
     <div class="wrap order__inner">
       <span class="order__mark mark rv"></span>
@@ -152,8 +175,14 @@
     <p class="modal__eyebrow">MUNIVAR</p>
     <h3 class="modal__title" id="mTitle" data-ui="consult"></h3>
     <p class="modal__intro" data-ui="mIntro"></p>
+    <p class="modal__showroom" data-modal-showroom hidden></p>
     <form id="orderForm" novalidate>
-      <fieldset class="field">
+      <div class="pick" data-pick hidden>
+        <img alt="" data-pick-img>
+        <div class="pick__t"><small data-ui="chosenLook"></small><b data-pick-name></b></div>
+        <button class="pick__x" type="button" data-pick-x data-ui-aria="removeLook">×</button>
+      </div>
+      <fieldset class="field" data-type-field>
         <legend class="field__q" data-ui="qType"></legend>
         <div class="choice">
           <label class="choice__i"><input type="radio" name="type" value="online"><span data-ui="tOnline"></span></label>

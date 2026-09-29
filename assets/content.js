@@ -22,8 +22,19 @@ window.SITE = {
     whatsapp: ""           // masalan: "998901262580"
   },
 
-  // Ariza yuboriladigan server manzili (api/send.php → Telegram bot)
+  // Ariza yuboriladigan server manzili:
+  //  - Cloudflare Worker (GitHub Pages uchun): "https://munivar-order.<akkaunt>.workers.dev"
+  //  - PHP hosting: "api/send.php"
   orderEndpoint: "api/send.php",
+
+  // Showroom — address bo'sh bo'lsa bo'lim ko'rinmaydi va formada "Showroomga tashrif" varianti yashiriladi
+  showroom: {
+    address: { uz: "", ru: "", en: "" },       // masalan: "Toshkent, Yunusobod tumani, ... ko'chasi 12"
+    landmark: { uz: "", ru: "", en: "" },      // mo'ljal, masalan: "Mega Planet yonida"
+    hours: { uz: "", ru: "", en: "" },         // masalan: "Du–Sha: 10:00–19:00"
+    lat: null, lng: null,                      // xarita uchun koordinata, masalan 41.3645, 69.2881
+    mapLink: ""                                // Yandex/Google xarita havolasi
+  },
 
   hero: {
     video: "media/video/hero.mp4",
@@ -93,8 +104,30 @@ window.SITE = {
 
   // Yulduzlar fikri — ma'lumot kelganda to'ldiriladi
   stars: [],
-  // Mijozlar fikri — ma'lumot kelganda to'ldiriladi
+  // Mijozlar fikri. Ikki xil yozish mumkin:
+  //   { q: {uz,ru,en}, who: "Dilnoza · Toshkent", photo: "media/reviews/1.webp" }   — matnli fikr
+  //   { shot: "media/reviews/s1.webp" }                                             — Instagram/Telegram skrinshoti
   reviews: [],
+
+  // Ko'p so'raladigan savollar. Javobi (a) bo'sh savollar ko'rsatilmaydi.
+  faq: [
+    { q: { uz: "Libos tikish qancha vaqt oladi?", ru: "Сколько времени занимает пошив?", en: "How long does tailoring take?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "Tayyor liboslar bormi yoki faqat buyurtma asosidami?", ru: "Есть ли готовые платья или только на заказ?", en: "Do you have ready-made dresses or only made to order?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "O'lchovni qanday beraman? Showroomga kelishim shartmi?", ru: "Как передать мерки? Обязательно ли приходить в шоурум?", en: "How do I give my measurements? Do I have to visit the showroom?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "Narxlar qancha turadi?", ru: "Сколько стоят платья?", en: "How much do the dresses cost?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "To'lov qanday amalga oshiriladi? Oldindan to'lov bormi?", ru: "Как происходит оплата? Нужна ли предоплата?", en: "How does payment work? Is a deposit required?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "Viloyatlarga va chet elga yetkazib berasizmi?", ru: "Доставляете ли в регионы и за рубеж?", en: "Do you deliver to other regions and abroad?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "Rang yoki modelni o'zgartirib tiktirsa bo'ladimi?", ru: "Можно ли изменить цвет или модель?", en: "Can I change the colour or the design?" },
+      a: { uz: "", ru: "", en: "" } },
+    { q: { uz: "Libos mos kelmasa, tuzatib berasizmi?", ru: "Если платье не подойдёт, вы его подгоните?", en: "If the dress doesn't fit, will you alter it?" },
+      a: { uz: "", ru: "", en: "" } }
+  ],
 
   founder: {
     name: { uz: "Muslima To'lqunova", ru: "Муслима Тулкунова", en: "Muslima Tulkunova" },
@@ -184,3 +217,23 @@ window.UI = {
     footMeta: "Uzbekistan", close: "Close", prev: "Previous", next: "Next", sound: "Sound", menu: "Menu"
   }
 };
+
+/* Qo'shimcha interfeys matnlari: libos so'rash, showroom, savol-javob */
+Object.assign(window.UI.uz, {
+  lookLabel: "Libos", askLook: "Shu libosni so'rash", chosenLook: "Tanlangan libos", removeLook: "Olib tashlash",
+  showEyebrow: "Showroom", showTitle: "Bizga tashrif buyuring", addr: "Manzil", landmarkL: "Mo'ljal", hoursL: "Ish vaqti", route: "Xaritada ochish",
+  orderLeadOnline: "O'lchovingiz bo'yicha individual tikamiz. Ariza qoldiring — tez orada bog'lanamiz.",
+  faqEyebrow: "Savol-javob", faqTitle: "Ko'p beriladigan savollar", faqMore: "Savolingizga javob topmadingizmi? Bizga yozing:"
+});
+Object.assign(window.UI.ru, {
+  lookLabel: "Платье", askLook: "Запросить это платье", chosenLook: "Выбранное платье", removeLook: "Убрать",
+  showEyebrow: "Шоурум", showTitle: "Приходите к нам", addr: "Адрес", landmarkL: "Ориентир", hoursL: "Часы работы", route: "Открыть на карте",
+  orderLeadOnline: "Индивидуальный пошив по вашим меркам. Оставьте заявку — мы скоро свяжемся.",
+  faqEyebrow: "Вопросы и ответы", faqTitle: "Частые вопросы", faqMore: "Не нашли ответ? Напишите нам:"
+});
+Object.assign(window.UI.en, {
+  lookLabel: "Look", askLook: "Ask about this dress", chosenLook: "Selected dress", removeLook: "Remove",
+  showEyebrow: "Showroom", showTitle: "Visit us", addr: "Address", landmarkL: "Landmark", hoursL: "Opening hours", route: "Open in maps",
+  orderLeadOnline: "Bespoke tailoring to your measurements. Leave a request and we'll be in touch soon.",
+  faqEyebrow: "FAQ", faqTitle: "Frequently asked questions", faqMore: "Didn't find your answer? Message us:"
+});
