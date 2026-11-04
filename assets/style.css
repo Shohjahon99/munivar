@@ -441,3 +441,32 @@ body.menu-open .cta-fab,body.modal-open .cta-fab{opacity:0;pointer-events:none}
 .shake{animation:errShake .32s var(--ease)}
 body.modal-open{overflow:hidden}
 @media (min-width:860px){.pm__main{aspect-ratio:auto;height:min(calc(92svh - 82px),780px)}.pm__sheet{max-height:92svh}}
+
+/* kartadagi "Buyurtma berish" */
+.pcard__buy{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;padding:12px 10px;border:1px solid var(--ink);color:var(--ink);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:background .25s,color .25s}
+.pcard__buy svg{width:17px;height:17px;flex:0 0 auto}
+.pcard:hover .pcard__buy,.pcard:focus-visible .pcard__buy{background:var(--ink);color:#fff}
+@media (max-width:420px){.pcard__buy{font-size:11px;letter-spacing:.06em;padding:11px 6px;gap:6px}}
+
+/* buyurtma formasi (mahsulot oynasida) */
+.pm__form{margin-top:4px}
+.pm__form-title{margin:6px 0 16px}
+.pm__form .field{margin-bottom:16px}
+.pm__form .field__q small{text-transform:none;letter-spacing:0;font-weight:400;color:var(--faint)}
+.pm__form textarea.field__in{resize:vertical;min-height:44px}
+.pm__tg{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:12px;border:1px solid var(--line);font-size:13px;font-weight:500;letter-spacing:.06em}
+.pm__tg svg{width:18px;height:18px}
+.pm__tg:hover{border-color:var(--gold)}
+
+/* tasdiq */
+.pm__done{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 32px}
+@media (max-width:859px){.pm__done{grid-column:1;padding:36px var(--gut) calc(40px + env(safe-area-inset-bottom))}}
+.pm__done-mark{width:64px;height:64px;color:var(--gold);margin-bottom:18px}
+.pm__done-mark svg{width:100%;height:100%}
+.pm__done-title{margin:0 0 10px;font-family:var(--serif);font-size:clamp(28px,3.4vw,38px);font-weight:500;line-height:1.15}
+.pm__done-text{margin:0;color:var(--soft);font-size:17px}
+.pm__done-sum{margin:20px 0 28px;padding:12px 16px;background:var(--paper-2);font-size:14px;max-width:40ch}
+.pcard{display:flex;flex-direction:column}
+.pcard__body{flex:1;display:flex;flex-direction:column}
+.pcard__buy{margin-top:auto}
+.pcard__body > :nth-last-child(2){margin-bottom:14px}

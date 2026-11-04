@@ -354,3 +354,30 @@ Object.assign(window.UI.en, {
   metaDesc: "MUNIVAR — premium womenswear: evening dresses, capes and embroidered dresses. Made to measure, order via Telegram. 51 Qiziltut St, Tashkent.",
   imgAlt: "MUNIVAR dress"
 });
+
+/* Buyurtma berish oynasi */
+Object.assign(window.UI.uz, {
+  buyNow: "Buyurtma berish", custTitle: "Ma'lumotlaringiz", addrQ: "Manzil", addrPh: "Shahar, tuman, ko'cha (yetkazib berish uchun)",
+  commentQ: "Izoh", optional: "(ixtiyoriy)", confirmOrder: "Buyurtmani rasmiylashtirish",
+  orderDoneTitle: "Buyurtmangiz rasmiylashtirildi!", orderDoneText: "Tez orada siz bilan bog'lanamiz.",
+  continueShop: "Xaridni davom ettirish", sendViaTg: "Telegram orqali yuborish",
+  errOrder: "Buyurtmani yuborib bo'lmadi. Telegram orqali yuboring yoki qo'ng'iroq qiling:",
+  addrL: "Manzil", commentL: "Izoh", orderNew: "Yangi buyurtma"
+});
+Object.assign(window.UI.ru, {
+  buyNow: "Заказать", custTitle: "Ваши данные", addrQ: "Адрес", addrPh: "Город, район, улица (для доставки)",
+  commentQ: "Комментарий", optional: "(необязательно)", confirmOrder: "Оформить заказ",
+  orderDoneTitle: "Ваш заказ оформлен!", orderDoneText: "Мы скоро свяжемся с вами.",
+  continueShop: "Продолжить покупки", sendViaTg: "Отправить через Telegram",
+  errOrder: "Не удалось отправить заказ. Отправьте через Telegram или позвоните:",
+  addrL: "Адрес", commentL: "Комментарий", orderNew: "Новый заказ"
+});
+Object.assign(window.UI.en, {
+  buyNow: "Order now", custTitle: "Your details", addrQ: "Address", addrPh: "City, district, street (for delivery)",
+  commentQ: "Comment", optional: "(optional)", confirmOrder: "Place order",
+  orderDoneTitle: "Your order has been placed!", orderDoneText: "We'll contact you shortly.",
+  continueShop: "Continue shopping", sendViaTg: "Send via Telegram",
+  errOrder: "Couldn't send the order. Send it via Telegram or call us:",
+  addrL: "Address", commentL: "Comment", orderNew: "New order"
+});
+window.UI.uz.pcs = "dona"; window.UI.ru.pcs = "шт."; window.UI.en.pcs = "pcs";

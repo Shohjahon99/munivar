@@ -284,6 +284,13 @@
       <div class="pm__main"><img alt="" data-pm-img></div>
       <div class="pm__thumbs" data-pm-thumbs></div>
     </div>
+    <div class="pm__done" data-pm-done hidden>
+      <span class="pm__done-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.3 3 3 6-6.3"/></svg></span>
+      <h3 class="pm__done-title" data-ui="orderDoneTitle"></h3>
+      <p class="pm__done-text" data-ui="orderDoneText"></p>
+      <p class="pm__done-sum" data-pm-done-sum></p>
+      <button class="btn btn--gold" type="button" data-pm-continue data-ui="continueShop"></button>
+    </div>
     <div class="pm__info">
       <p class="eyebrow">MUNIVAR</p>
       <h3 class="pm__name" id="pmName" data-pm-name></h3>
@@ -302,11 +309,37 @@
         <div class="qty"><button type="button" data-qty="-1" aria-label="−">−</button><span data-pm-qty>1</span><button type="button" data-qty="1" aria-label="+">+</button></div>
       </div>
       <div class="pm__total"><span data-ui="total"></span><b data-pm-total></b></div>
-      <button class="btn btn--gold pm__order" type="button" data-pm-order>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 4 3 11l6 2 2 6 3-4 5 4Z"/><path d="m9 13 8-6"/></svg>
-        <span data-ui="orderTg"></span>
-      </button>
-      <p class="pm__msg" data-pm-msg aria-live="polite"></p>
+
+      <form class="pm__form" data-pm-form novalidate>
+        <p class="pm__label pm__form-title" data-ui="custTitle"></p>
+        <label class="field"><span class="field__q" data-ui="qName"></span>
+          <input class="field__in" name="name" autocomplete="name" maxlength="80" data-ui-ph="pName">
+        </label>
+        <label class="field"><span class="field__q" data-ui="qPhone"></span>
+          <span class="phone">
+            <select class="phone__cc" name="cc">
+              <option>+998</option><option>+7</option><option>+992</option><option>+996</option><option>+993</option><option>+994</option><option>+971</option><option>+966</option><option>+90</option><option>+1</option><option>+44</option><option>+49</option>
+            </select>
+            <input class="field__in phone__num" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="90 123 45 67">
+          </span>
+        </label>
+        <label class="field"><span class="field__q"><span data-ui="addrQ"></span> <small data-ui="optional"></small></span>
+          <input class="field__in" name="address" autocomplete="street-address" maxlength="160" data-ui-ph="addrPh">
+        </label>
+        <label class="field"><span class="field__q"><span data-ui="commentQ"></span> <small data-ui="optional"></small></span>
+          <textarea class="field__in" name="comment" rows="2" maxlength="400"></textarea>
+        </label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn--gold pm__order" type="submit" data-pm-order>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span data-ui="confirmOrder"></span>
+        </button>
+        <p class="pm__msg" data-pm-msg aria-live="polite"></p>
+        <button class="pm__tg" type="button" data-pm-tg hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 4 3 11l6 2 2 6 3-4 5 4Z"/><path d="m9 13 8-6"/></svg>
+          <span data-ui="sendViaTg"></span>
+        </button>
+      </form>
     </div>
   </div>
 </div>
