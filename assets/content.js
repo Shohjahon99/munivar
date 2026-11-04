@@ -35,7 +35,7 @@ window.SITE = {
   // Ixtiyoriy server (Telegram bot). Bo'sh bo'lsa ariza to'g'ridan-to'g'ri Telegram chatga yuboriladi.
   //  - Cloudflare Worker: "https://munivar-order.<akkaunt>.workers.dev"
   //  - PHP hosting: "api/send.php"
-  orderEndpoint: "",
+  orderEndpoint: "https://adjxdgfifzmepjrxdbte.supabase.co/functions/v1/munivar-order",
 
   // Showroom — address bo'sh bo'lsa bo'lim ko'rinmaydi va formada "Showroomga tashrif" varianti yashiriladi
   showroom: {
