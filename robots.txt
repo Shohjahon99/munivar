@@ -5,5 +5,6 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /worker/
+Disallow: /supabase/
 
 Sitemap: https://shohjahon99.github.io/munivar/sitemap.xml
