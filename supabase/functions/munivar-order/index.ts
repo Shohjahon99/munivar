@@ -8,7 +8,7 @@
 // Funksiya sozlamasida "Verify JWT" o'chirilgan bo'lishi kerak (sayt ochiq forma yuboradi).
 
 const DEFAULT_CHAT_ID = '-1004358454653'; // "Noila opa | PC-106 Toshkent shahar" guruhi
-const DEFAULT_ORIGINS = 'https://shohjahon99.github.io,http://localhost:5180';
+const DEFAULT_ORIGINS = 'https://munivar.uz,https://www.munivar.uz,https://shohjahon99.github.io,http://localhost:5180';
 
 type Env = { BOT_TOKEN?: string; CHAT_ID?: string; ALLOWED_ORIGINS?: string };
 
