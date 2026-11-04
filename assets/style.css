@@ -470,3 +470,10 @@ body.modal-open{overflow:hidden}
 .pcard__body{flex:1;display:flex;flex-direction:column}
 .pcard__buy{margin-top:auto}
 .pcard__body > :nth-last-child(2){margin-bottom:14px}
+
+/* "Qanday obrazga libos qidirdingiz?" — bosiladigan tugmalar */
+.occasions li{padding:0;border:0;background:none}
+.occ{display:block;width:100%;padding:18px 14px;text-align:center;background:var(--paper);border:1px solid var(--line);font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.2;color:var(--ink);transition:border-color .3s,color .3s,background .3s}
+.occ:hover,.occ:focus-visible{border-color:var(--gold);color:var(--gold);outline:none}
+@media (min-width:760px){.occasions{grid-template-columns:repeat(4,1fr)}}
+.field__select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--soft) 50%),linear-gradient(135deg,var(--soft) 50%,transparent 50%);background-position:calc(100% - 12px) 55%,calc(100% - 7px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:24px}

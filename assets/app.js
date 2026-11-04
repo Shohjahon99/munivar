@@ -129,11 +129,6 @@
     $('[data-map]').remove();
   }
   if (!mapLink) $('[data-map-link]').remove(); else $('[data-map-link]').href = mapLink;
-  if (!hasShowroom) {
-    // showroom yo'q — formada tashrif varianti ham ko'rinmaydi, faqat online buyurtma
-    $('[data-type-field]').hidden = true;
-    $('#orderForm').type[0].checked = true;
-  }
   function renderShowroom() {
     $('#showroom').hidden = !hasShowroom;
     if (!hasShowroom) return;
@@ -141,7 +136,7 @@
     $('[data-showroom-list]').innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
     const ms = $('[data-modal-showroom]');
     ms.hidden = false;
-    ms.textContent = `${U.showEyebrow}: ${L(SR.address)}${L(SR.hours) ? ' · ' + L(SR.hours) : ''}`;
+    ms.textContent = [`${U.showEyebrow}: ${L(SR.address)}`, L(SR.landmark) && `${U.landmarkL}: ${L(SR.landmark)}`, L(SR.hours)].filter(Boolean).join(' · ');
   }
 
   /* ---------- savol-javob ---------- */
@@ -186,9 +181,14 @@
     $('[data-lcats]').innerHTML = S.looks.cats.map((c) =>
       `<button class="lcat${c.id === catNow ? ' is-on' : ''}" type="button" data-lcat="${esc(c.id)}" aria-pressed="${c.id === catNow}">${esc(L(c.t))}</button>`).join('');
 
-    $('[data-craft]').innerHTML = S.craft.map((c) =>
-      `<div class="craft__i rv in"><div class="craft__media ph has-img"><img src="${esc(c.img)}" alt="${esc(L(c.t))}" loading="lazy" decoding="async"></div><h3>${esc(L(c.t))}</h3><p>${esc(L(c.d))}</p></div>`).join('');
-    $('[data-occasions]').innerHTML = S.occasions.map((o) => `<li class="rv in">${esc(L(o))}</li>`).join('');
+    $('[data-occasions]').innerHTML = S.occasions.map((o, i) =>
+      `<li class="rv in"><button type="button" class="occ" data-occ="${i}">${esc(L(o))}</button></li>`).join('');
+    const evSel = $('[data-event-select]');
+    const evNow = evSel.value;
+    evSel.innerHTML = `<option value="">${esc(U.eventPick)}</option>` +
+      S.occasions.map((o, i) => `<option value="${i}">${esc(L(o))}</option>`).join('') +
+      `<option value="other">${esc(U.eventOther)}</option>`;
+    evSel.value = evNow;
 
     $('#stars').hidden = !S.stars.length;
     starsEl.innerHTML = S.stars.map((s) => `
@@ -367,14 +367,26 @@
     if (lb.classList.contains('on')) closeLb(); else if (modal.classList.contains('on')) closeModal();
   });
 
+  // "Qanday obrazga libos qidirdingiz?" — tanlangan obraz bilan buyurtma formasi ochiladi
+  $('[data-occasions]').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-occ]');
+    if (!b) return;
+    form.event.value = b.dataset.occ;
+    openModal();
+  });
+
+  // tadbir: tanlangan variantning matni (yuborish uchun o'zbekcha, chatda joriy tilda)
+  const eventText = (v, lng) => v === '' ? '' : v === 'other' ? window.UI[lng].eventOther : (S.occasions[+v] || {})[lng] || '';
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     $$('.err', form).forEach((x) => x.classList.remove('err'));
-    const type = form.type.value;
     const name = form.name.value.trim();
     const phone = form.phone.value.replace(/\D/g, '');
+    const city = form.city.value.trim();
+    const size = form.size.value.trim();
+    const ev = form.event.value;
     const bad = [];
-    if (!type) bad.push($('.choice', form));
     if (name.length < 2) bad.push(form.name);
     if (phone.length < 7) bad.push(form.phone);
     if (bad.length) {
@@ -383,10 +395,12 @@
       msg.textContent = U.errFill;
       return;
     }
-    const typeText = type === 'online' ? U.tOnline : U.tVisit;
     if (!S.orderEndpoint) {
       // server yo'q — ariza Telegram chatga tayyor matn bilan yuboriladi
-      const lines = [U.consultHello, '', `👤 ${U.name}: ${name}`, `📞 ${U.phoneL}: ${form.cc.value} ${phone}`, `📍 ${U.typeL}: ${typeText}`];
+      const lines = [U.consultHello, '', `👤 ${U.name}: ${name}`, `📞 ${U.phoneL}: ${form.cc.value} ${phone}`];
+      if (city) lines.push(`📍 ${U.cityL}: ${city}`);
+      if (ev) lines.push(`🎉 ${U.eventL}: ${eventText(ev, lang)}`);
+      if (size) lines.push(`📏 ${U.sizeL}: ${size}`);
       if (pickCode) lines.push(`👗 ${U.lookL}: ${pickCode}`);
       openTelegram(lines.join('\n'));
       msg.className = 'form__msg ok';
@@ -403,8 +417,9 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: type === 'online' ? window.UI.uz.tOnline : window.UI.uz.tVisit,
-          name, phone: `${form.cc.value} ${phone}`, look: pickCode, lang, website: form.website.value, page: location.href
+          kind: 'request',
+          name, phone: `${form.cc.value} ${phone}`, city, event: eventText(ev, 'uz'), size,
+          look: pickCode, lang, website: form.website.value, page: location.href
         })
       });
       const j = await r.json().catch(() => ({}));
@@ -413,7 +428,6 @@
       msg.textContent = U.ok;
       form.reset();
       setPick('');
-      if (!hasShowroom) form.type[0].checked = true;
     } catch (err) {
       msg.className = 'form__msg err';
       msg.textContent = `${U.errSend} ${C.phones[0]}`;

@@ -4,7 +4,7 @@ compatibility_date = "2026-09-01"
 
 [vars]
 # Formani yubora oladigan sayt manzillari (domen ulansa, shu yerga qo'shiladi)
-ALLOWED_ORIGINS = "https://munivar.uz,https://www.munivar.uz,https://shohjahon99.github.io,http://localhost:5180"
+ALLOWED_ORIGINS = "https://munivar.uz,https://www.munivar.uz,https://munivar.vercel.app,https://shohjahon99.github.io,http://localhost:5180"
 # Buyurtmalar tushadigan Telegram guruh ("Noila opa | PC-106 Toshkent shahar")
 CHAT_ID = "-1004358454653"
 

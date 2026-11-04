@@ -40,8 +40,8 @@ window.SITE = {
   // Showroom — address bo'sh bo'lsa bo'lim ko'rinmaydi va formada "Showroomga tashrif" varianti yashiriladi
   showroom: {
     address: { uz: "Toshkent, Olmazor tumani, Qiziltut ko'chasi, 51", ru: "Ташкент, Алмазарский район, ул. Кызылтут, 51", en: "51 Qiziltut St, Olmazor district, Tashkent" },
-    landmark: { uz: "Chorsu metrosi yaqinida", ru: "Рядом с метро Чорсу", en: "Near Chorsu metro station" },
-    hours: { uz: "10:00 – 22:00", ru: "10:00 – 22:00", en: "10:00 am – 10:00 pm" },
+    landmark: { uz: "Marwa hotel", ru: "Отель Marwa", en: "Marwa Hotel" },
+    hours: { uz: "Har kuni: 9:00 – 21:00", ru: "Ежедневно: 9:00 – 21:00", en: "Daily: 9:00 am – 9:00 pm" },
     lat: 41.326849, lng: 69.229467,
     mapLink: "https://yandex.uz/maps/10335/tashkent/house/qiziltut_ko_chasi_51/YkAYdAVpTUMAQFprfX9zd3RnbQ==/?ll=69.229467%2C41.326850&z=17"
   },
@@ -103,13 +103,12 @@ window.SITE = {
            en: "Floral work cascading from the shoulders — every stitch by hand." } }
   ],
 
+  // "Qanday obrazga libos qidirdingiz?" — bosilganda buyurtma formasi shu tanlov bilan ochiladi
   occasions: [
-    { uz: "To'y va nikoh", ru: "Свадьба и никах", en: "Wedding & nikah" },
-    { uz: "Kelin salom", ru: "Келин салом", en: "Kelin salom" },
-    { uz: "Hayit va bayramlar", ru: "Хайит и праздники", en: "Eid & holidays" },
-    { uz: "Kechki tadbirlar", ru: "Вечерние мероприятия", en: "Evening events" },
-    { uz: "Oilaviy marosimlar", ru: "Семейные торжества", en: "Family celebrations" },
-    { uz: "Kundalik nafis libos", ru: "Изящно каждый день", en: "Everyday elegance" }
+    { uz: "Marry me uchun", ru: "Для «Marry me»", en: "For a “Marry me” moment" },
+    { uz: "To'y egalari uchun", ru: "Для хозяев свадьбы", en: "For the wedding hosts" },
+    { uz: "Kelinga sovg'aga", ru: "В подарок невесте", en: "As a gift for the bride" },
+    { uz: "Look liboslar", ru: "Look-платья", en: "Look dresses" }
   ],
 
   // Yulduzlar fikri — ma'lumot kelganda to'ldiriladi
@@ -381,3 +380,38 @@ Object.assign(window.UI.en, {
   addrL: "Address", commentL: "Comment", orderNew: "New order"
 });
 window.UI.uz.pcs = "dona"; window.UI.ru.pcs = "шт."; window.UI.en.pcs = "pcs";
+
+/* Mijoz talabi: buyurtma formasi savollari, obraz bo'limi, katalog tugmasi */
+Object.assign(window.UI.uz, {
+  consult: "Buyurtma berish", mIntro: "Ma'lumotlaringizni qoldiring — tez orada siz bilan bog'lanamiz.",
+  send: "Buyurtma uchun bosing", seeCatalog: "Katalog ko'rish",
+  occEyebrow: "Obraz", occTitle: "Qanday obrazga libos qidirdingiz?",
+  qCity: "Qayerdansiz?", pCity: "Shahar yoki viloyat",
+  qEvent: "Qanday tadbir uchun qidirdingiz?", eventPick: "Tanlang", eventOther: "Boshqa",
+  qSize: "Hozirda razmeringiz qanday?", pSize: "Masalan: 46 yoki M",
+  cityL: "Qayerdan", eventL: "Tadbir", sizeL: "Razmer",
+  ok: "Rahmat! Buyurtmangiz qabul qilindi, tez orada siz bilan bog'lanamiz.",
+  consultHello: "Assalomu alaykum! Buyurtma bermoqchiman."
+});
+Object.assign(window.UI.ru, {
+  consult: "Оформить заказ", mIntro: "Оставьте свои данные — мы скоро свяжемся с вами.",
+  send: "Нажмите, чтобы заказать", seeCatalog: "Смотреть каталог",
+  occEyebrow: "Образ", occTitle: "Для какого образа вы ищете платье?",
+  qCity: "Откуда вы?", pCity: "Город или область",
+  qEvent: "Для какого события ищете?", eventPick: "Выберите", eventOther: "Другое",
+  qSize: "Какой у вас сейчас размер?", pSize: "Например: 46 или M",
+  cityL: "Откуда", eventL: "Событие", sizeL: "Размер",
+  ok: "Спасибо! Заказ принят, мы скоро свяжемся с вами.",
+  consultHello: "Здравствуйте! Хочу сделать заказ."
+});
+Object.assign(window.UI.en, {
+  consult: "Place an order", mIntro: "Leave your details — we'll contact you shortly.",
+  send: "Tap to order", seeCatalog: "View catalogue",
+  occEyebrow: "Look", occTitle: "What look are you shopping for?",
+  qCity: "Where are you from?", pCity: "City or region",
+  qEvent: "What occasion is it for?", eventPick: "Choose", eventOther: "Other",
+  qSize: "What is your current size?", pSize: "E.g. 46 or M",
+  cityL: "From", eventL: "Occasion", sizeL: "Size",
+  ok: "Thank you! Your order has been received — we'll contact you soon.",
+  consultHello: "Hello! I'd like to place an order."
+});

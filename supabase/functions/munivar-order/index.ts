@@ -8,7 +8,7 @@
 // Funksiya sozlamasida "Verify JWT" o'chirilgan bo'lishi kerak (sayt ochiq forma yuboradi).
 
 const DEFAULT_CHAT_ID = '-1004358454653'; // "Noila opa | PC-106 Toshkent shahar" guruhi
-const DEFAULT_ORIGINS = 'https://munivar.uz,https://www.munivar.uz,https://shohjahon99.github.io,http://localhost:5180';
+const DEFAULT_ORIGINS = 'https://munivar.uz,https://www.munivar.uz,https://munivar.vercel.app,https://shohjahon99.github.io,http://localhost:5180';
 
 type Env = { BOT_TOKEN?: string; CHAT_ID?: string; ALLOWED_ORIGINS?: string };
 
@@ -74,17 +74,22 @@ export async function handle(req: Request, env: Env): Promise<Response> {
       `\n🌐 ${h(lang)} · 🕒 ${time}` +
       (link ? `\n🔗 ${h(link)}` : '');
   } else {
-    // konsultatsiya arizasi
-    const type = clean(data.type, 40);
+    // umumiy buyurtma arizasi ("Buyurtma berish" formasi)
+    const city = clean(data.city, 80);
+    const event = clean(data.event, 80);
+    const size = clean(data.size, 30);
+    const type = clean(data.type, 40);   // eski forma bilan moslik
     const look = clean(data.look, 12);
     text =
-      `📝 <b>Yangi ariza — MUNIVAR</b>\n\n` +
+      `📝 <b>Yangi buyurtma arizasi — MUNIVAR</b>\n\n` +
       `👤 <b>Ism:</b> ${h(name)}\n` +
       `📞 <b>Telefon:</b> ${h(phone)}\n` +
-      `📍 <b>Turi:</b> ${h(type)}\n` +
+      (city ? `📍 <b>Qayerdan:</b> ${h(city)}\n` : '') +
+      (event ? `🎉 <b>Tadbir:</b> ${h(event)}\n` : '') +
+      (size ? `📏 <b>Razmer:</b> ${h(size)}\n` : '') +
+      (type ? `ℹ️ <b>Turi:</b> ${h(type)}\n` : '') +
       (look ? `👗 <b>Libos:</b> ${h(look)}\n` : '') +
-      `🌐 <b>Til:</b> ${h(lang)}\n` +
-      `🕒 ${time}`;
+      `\n🌐 ${h(lang)} · 🕒 ${time}`;
   }
 
   const send = (chatId: string | number) => fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`, {
