@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "id": "havorang-kapa",
+      "sample": true,
+      "active": true,
+      "name": { "uz": "Havorang kapa libos", "ru": "Платье с кейпом, небесный", "en": "Sky-blue cape dress" },
+      "desc": {
+        "uz": "Yelkadan tushuvchi kapa, munchoq va hajmli gullar bilan qo'lda bezatilgan. Yengil, oqimli mato.",
+        "ru": "Кейп от плеч, ручная отделка бисером и объёмными цветами. Лёгкая струящаяся ткань.",
+        "en": "Shoulder cape hand-finished with beads and 3D flowers. Light, flowing fabric."
+      },
+      "price": 2800000,
+      "discount": 0,
+      "colors": [{ "name": "Havorang", "hex": "#b7cfd4" }],
+      "sizes": ["S", "M", "L", "XL"],
+      "images": ["media/looks/look-10-1400.webp", "media/looks/look-11-1400.webp"]
+    },
+    {
+      "id": "bordo-gulli-kapa",
+      "sample": true,
+      "active": true,
+      "name": { "uz": "Bordo gulli qora kapa", "ru": "Чёрный кейп с бордовыми цветами", "en": "Black cape with burgundy blooms" },
+      "desc": {
+        "uz": "Qora shifon ustida bordo rangli hajmli gullar va qora munchoq naqshlar.",
+        "ru": "Объёмные бордовые цветы и чёрный бисер на чёрном шифоне.",
+        "en": "Burgundy 3D flowers and black beadwork on black chiffon."
+      },
+      "price": 2500000,
+      "discount": 10,
+      "colors": [{ "name": "Qora / bordo", "hex": "#4a1520" }],
+      "sizes": ["S", "M", "L", "XL"],
+      "images": ["media/looks/look-18-1400.webp", "media/looks/look-16-1400.webp"]
+    },
+    {
+      "id": "naqshli-kapa",
+      "sample": true,
+      "active": true,
+      "name": { "uz": "Naqshli kashta kapa", "ru": "Кейп с цветной вышивкой", "en": "Embroidered pattern cape" },
+      "desc": {
+        "uz": "Rangli kashta, payetka va munchoq popuklar bilan bezatilgan kapa libos.",
+        "ru": "Платье-кейп с цветной вышивкой, пайетками и бисерной бахромой.",
+        "en": "Cape dress with colour embroidery, sequins and beaded fringe."
+      },
+      "price": 3200000,
+      "discount": 0,
+      "colors": [{ "name": "Qora", "hex": "#16161a" }],
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "images": ["media/looks/look-08-1400.webp", "media/looks/look-05-1400.webp"]
+    },
+    {
+      "id": "kumush-kashtali-libos",
+      "sample": true,
+      "active": true,
+      "name": { "uz": "Kumush kashtali libos", "ru": "Платье с серебряной вышивкой", "en": "Silver-embroidered dress" },
+      "desc": {
+        "uz": "Ko'krak va yenglarida kumush payetka gullar. Keng, oqimli etak.",
+        "ru": "Серебряные цветы из пайеток на лифе и рукавах. Широкая струящаяся юбка.",
+        "en": "Silver sequin flowers on the bodice and sleeves. Full, flowing skirt."
+      },
+      "price": 2600000,
+      "discount": 15,
+      "colors": [{ "name": "Qora", "hex": "#16161a" }, { "name": "Kulrang", "hex": "#b9b9c2" }],
+      "sizes": ["S", "M", "L", "XL"],
+      "images": ["media/looks/look-02-1400.webp", "media/looks/look-04-1400.webp"]
+    },
+    {
+      "id": "havorang-plisse",
+      "sample": true,
+      "active": true,
+      "name": { "uz": "Havorang plisse libos", "ru": "Плиссированное платье, небесный", "en": "Sky-blue pleated dress" },
+      "desc": {
+        "uz": "Belida gul kashtali, keng yengli plisse libos.",
+        "ru": "Плиссированное платье с вышивкой на талии и пышными рукавами.",
+        "en": "Pleated dress with waist embroidery and full sleeves."
+      },
+      "price": 2200000,
+      "discount": 0,
+      "colors": [{ "name": "Havorang", "hex": "#b7cfd4" }],
+      "sizes": ["S", "M", "L"],
+      "images": ["media/looks/look-14-1400.webp", "media/looks/look-15-1400.webp"]
+    }
+  ]
+}

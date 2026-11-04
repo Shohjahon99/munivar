@@ -1,0 +1,25 @@
+# main ga har bir push (kod yoki admin paneldan mahsulot) avtomatik gh-pages ga ko'chiriladi —
+# GitHub Pages saytni gh-pages dan chiqaradi.
+name: Sync main to gh-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push main to gh-pages
+        run: git push --force origin HEAD:gh-pages

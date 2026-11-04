@@ -1,0 +1,9 @@
+# Eslatma: robots.txt faqat domen ildizida ishlaydi (masalan munivar.uz/robots.txt).
+# Hozir sayt shohjahon99.github.io/munivar/ da — o'z domeningiz ulanganda bu fayl kuchga kiradi.
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /worker/
+
+Sitemap: https://shohjahon99.github.io/munivar/sitemap.xml

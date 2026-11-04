@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MUNIVAR — Admin panel</title>
+<link rel="icon" href="../media/brand/logo-square.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="top__brand" href="../" target="_blank" rel="noopener"><span class="mark"></span>MUNIVAR <small>admin</small></a>
+  <div class="top__right" id="topRight" hidden>
+    <a class="link" href="../#shop" target="_blank" rel="noopener">Saytni ochish ↗</a>
+    <button class="link" type="button" id="logout">Chiqish</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- KIRISH -->
+  <section class="card login" id="login" hidden>
+    <h1>Admin panelga kirish</h1>
+    <p class="muted">Mahsulotlar GitHub repozitoriyda saqlanadi. Kirish uchun GitHub token kerak — uni bir marta yaratasiz.</p>
+    <form id="loginForm">
+      <label class="f"><span>GitHub token</span>
+        <input type="password" id="token" autocomplete="off" placeholder="github_pat_..." required>
+      </label>
+      <label class="check"><input type="checkbox" id="remember"> Shu qurilmada eslab qolish</label>
+      <button class="btn" type="submit">Kirish</button>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+    <details class="help">
+      <summary>Token qanday olinadi?</summary>
+      <ol>
+        <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained token yaratish</a> sahifasini oching (Shohjahon99 akkauntidan).</li>
+        <li><b>Token name:</b> MUNIVAR admin. <b>Expiration:</b> 1 yil (yoki xohlagancha).</li>
+        <li><b>Repository access:</b> "Only select repositories" → <b>munivar</b>.</li>
+        <li><b>Permissions → Repository permissions → Contents:</b> <b>Read and write</b>.</li>
+        <li>"Generate token" ni bosing, chiqqan kodni nusxalab shu yerga qo'ying.</li>
+      </ol>
+      <p class="muted">Token faqat shu repozitoriyga kirish huquqiga ega. Uni hech kimga bermang.</p>
+    </details>
+  </section>
+
+  <!-- RO'YXAT -->
+  <section id="listView" hidden>
+    <div class="bar">
+      <div>
+        <h1>Mahsulotlar</h1>
+        <p class="muted" id="listInfo"></p>
+      </div>
+      <div class="bar__actions">
+        <button class="btn btn--ghost" type="button" id="delSamples" hidden>Namunalarni o'chirish</button>
+        <button class="btn" type="button" id="addBtn">+ Yangi mahsulot</button>
+      </div>
+    </div>
+    <p class="note" id="note" hidden></p>
+    <div class="plist" id="plist"></div>
+  </section>
+
+  <!-- TAHRIRLASH -->
+  <section class="card" id="editView" hidden>
+    <div class="bar">
+      <h1 id="editTitle">Yangi mahsulot</h1>
+      <button class="link" type="button" id="backBtn">← Ro'yxatga qaytish</button>
+    </div>
+    <form id="editForm" novalidate>
+      <div class="grid2">
+        <div>
+          <h2>Rasmlar <small>(2 ta, tik — 3:4 nisbatda yaxshi chiqadi)</small></h2>
+          <div class="imgs">
+            <label class="slot" data-slot="0"><input type="file" accept="image/*"><span class="slot__ph">+ 1-rasm<br><small>asosiy</small></span><img alt=""><button type="button" class="slot__x" title="O'chirish">×</button></label>
+            <label class="slot" data-slot="1"><input type="file" accept="image/*"><span class="slot__ph">+ 2-rasm<br><small>ixtiyoriy</small></span><img alt=""><button type="button" class="slot__x" title="O'chirish">×</button></label>
+          </div>
+        </div>
+        <div>
+          <h2>Narx</h2>
+          <div class="grid2 grid2--tight">
+            <label class="f"><span>Narxi (so'm)</span><input type="number" id="price" min="0" step="1000" placeholder="2500000"></label>
+            <label class="f"><span>Chegirma (%)</span><input type="number" id="discount" min="0" max="90" step="1" placeholder="0"></label>
+          </div>
+          <p class="muted" id="pricePreview"></p>
+          <label class="check"><input type="checkbox" id="active" checked> Saytda ko'rsatilsin</label>
+        </div>
+      </div>
+
+      <h2>Nomi va tasnifi</h2>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab is-on" data-lang="uz">O'zbekcha *</button>
+        <button type="button" class="tab" data-lang="ru">Русский</button>
+        <button type="button" class="tab" data-lang="en">English</button>
+      </div>
+      <div class="langs">
+        <div class="lang-pane" data-lang="uz">
+          <label class="f"><span>Nomi *</span><input id="name_uz" maxlength="80" placeholder="Masalan: Havorang kapa libos"></label>
+          <label class="f"><span>Tasnifi</span><textarea id="desc_uz" rows="3" maxlength="600" placeholder="Mato, bezak, bichim haqida qisqacha"></textarea></label>
+        </div>
+        <div class="lang-pane" data-lang="ru" hidden>
+          <label class="f"><span>Название</span><input id="name_ru" maxlength="80"></label>
+          <label class="f"><span>Описание</span><textarea id="desc_ru" rows="3" maxlength="600"></textarea></label>
+        </div>
+        <div class="lang-pane" data-lang="en" hidden>
+          <label class="f"><span>Name</span><input id="name_en" maxlength="80"></label>
+          <label class="f"><span>Description</span><textarea id="desc_en" rows="3" maxlength="600"></textarea></label>
+        </div>
+        <p class="muted">Rus va ingliz tili bo'sh qolsa, saytda o'zbekcha matn ko'rsatiladi.</p>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <h2>Ranglar</h2>
+          <div id="colors"></div>
+          <div class="presets" id="colorPresets"></div>
+        </div>
+        <div>
+          <h2>O'lchamlar</h2>
+          <label class="f"><span>Vergul bilan yozing</span><input id="sizes" placeholder="S, M, L, XL"></label>
+          <div class="presets">
+            <button type="button" class="chip" data-sizes="S, M, L, XL">S–XL</button>
+            <button type="button" class="chip" data-sizes="S, M, L, XL, XXL">S–XXL</button>
+            <button type="button" class="chip" data-sizes="42, 44, 46, 48, 50, 52, 54">42–54</button>
+            <button type="button" class="chip" data-sizes="">O'lchamsiz</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="save">
+        <button class="btn btn--danger" type="button" id="delBtn" hidden>Mahsulotni o'chirish</button>
+        <button class="btn" type="submit" id="saveBtn">Saqlash</button>
+      </div>
+      <p class="msg" id="editMsg"></p>
+    </form>
+  </section>
+
+  <p class="loading" id="loading" hidden>Yuklanmoqda…</p>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<script src="admin.js"></script>
+</body>
+</html>

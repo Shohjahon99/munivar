@@ -32,7 +32,7 @@
   const qLang = new URLSearchParams(location.search).get('lang');
   let lang = [qLang, store.get('lang'), S.defaultLang].find((l) => S.langs.includes(l));
   let U = window.UI[lang];
-  const L = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? (v[lang] ?? v[S.defaultLang] ?? '') : (v ?? ''));
+  const L = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? (v[lang] || v[S.defaultLang] || '') : (v ?? ''));
   const get = (path) => L(path.split('.').reduce((o, k) => (o ? o[k] : ''), S));
 
   function fillImg(box, src, alt, srcset) {
@@ -160,7 +160,10 @@
   function render() {
     U = window.UI[lang];
     document.documentElement.lang = lang;
-    document.title = `MUNIVAR — ${L(S.brand.tagline)}`;
+    document.title = U.metaTitle;
+    const md = document.querySelector('meta[name="description"]');
+    if (md) md.content = U.metaDesc;
+    $$('.rail__media').forEach((m) => { const im = $('img', m); if (im) im.alt = `${U.imgAlt} ${lookCode(S.looks.items[m.dataset.i].img)}`; });
 
     $$('[data-t]').forEach((el) => (el.textContent = get(el.dataset.t)));
     $$('[data-ui]').forEach((el) => (el.textContent = U[el.dataset.ui]));
@@ -172,7 +175,7 @@
       if (eb) eb.insertAdjacentHTML('beforeend', ` <span class="sample-tag">${esc(U.sample)}</span>`);
     });
 
-    const ids = ['#looks', '#craft', '#founder', '#order'];
+    const ids = ['#shop', '#looks', '#founder', '#showroom', '#order'];
     $$('[data-navlinks]').forEach((n) => (n.innerHTML = U.nav.map((t, i) => `<a href="${ids[i]}">${esc(t)}</a>`).join('')));
     $$('[data-lang]').forEach((n) => (n.innerHTML = S.langs.map((l) =>
       `<button class="lang__o${l === lang ? ' is-on' : ''}" type="button" data-set-lang="${l}" aria-pressed="${l === lang}">${l}</button>`).join('')));
@@ -208,8 +211,23 @@
     renderShowroom();
     renderFaq();
     if (pickCode) $('[data-pick-name]').textContent = `${U.lookLabel} ${pickCode}`;
+    renderHooks.forEach((f) => f());
     updNav();
   }
+
+  /* ---------- Telegram + shop.js uchun umumiy yordamchilar ---------- */
+  const renderHooks = [];
+  function openTelegram(text) {
+    const user = S.orderTelegram || C.telegram;
+    try { navigator.clipboard && navigator.clipboard.writeText(text).catch(() => {}); } catch (e) {}
+    window.open(`https://t.me/${user}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  }
+  window.MV = {
+    get lang() { return lang; },
+    get U() { return U; },
+    L, esc, fillImg, openTelegram,
+    onRender: (f) => { renderHooks.push(f); f(); }
+  };
 
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-set-lang]');
@@ -363,6 +381,17 @@
       bad.forEach((x) => { void x.offsetWidth; x.classList.add('err'); });
       msg.className = 'form__msg err';
       msg.textContent = U.errFill;
+      return;
+    }
+    const typeText = type === 'online' ? U.tOnline : U.tVisit;
+    if (!S.orderEndpoint) {
+      // server yo'q — ariza Telegram chatga tayyor matn bilan yuboriladi
+      const lines = [U.consultHello, '', `👤 ${U.name}: ${name}`, `📞 ${U.phoneL}: ${form.cc.value} ${phone}`, `📍 ${U.typeL}: ${typeText}`];
+      if (pickCode) lines.push(`👗 ${U.lookL}: ${pickCode}`);
+      openTelegram(lines.join('\n'));
+      msg.className = 'form__msg ok';
+      msg.textContent = U.tgOpened;
+      setPick('');
       return;
     }
     btn.disabled = true;

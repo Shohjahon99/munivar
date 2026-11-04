@@ -18,26 +18,32 @@ window.SITE = {
     tagline: { uz: "Nafosat va o'ziga xoslik", ru: "Изящество и индивидуальность", en: "Elegance and individuality" }
   },
 
+  // Saytning internetdagi manzili (SEO, ulashish havolalari uchun). Domen ulansa shu yer o'zgaradi.
+  siteUrl: "https://shohjahon99.github.io/munivar/",
+
   contacts: {
     phones: ["+998 90 126 25 80", "+998 98 126 25 80"],
-    instagram: "muslimam_libas",
-    telegram: "https://t.me/+baVhchzzcPBmYzky",   // username yoki to'liq havola
+    instagram: "munivar_2019",
+    telegram: "muslimam_libas_2019",   // username yoki to'liq havola
     telegramLabel: { uz: "MUNIVAR kanali", ru: "Канал MUNIVAR", en: "MUNIVAR channel" },
     whatsapp: ""           // masalan: "998901262580"
   },
 
-  // Ariza yuboriladigan server manzili:
-  //  - Cloudflare Worker (GitHub Pages uchun): "https://munivar-order.<akkaunt>.workers.dev"
+  // Buyurtma va arizalar shu Telegram akkauntiga xabar bo'lib boradi (kanal emas, shaxsiy akkaunt bo'lishi kerak)
+  orderTelegram: "muslimam_libas_2019",
+
+  // Ixtiyoriy server (Telegram bot). Bo'sh bo'lsa ariza to'g'ridan-to'g'ri Telegram chatga yuboriladi.
+  //  - Cloudflare Worker: "https://munivar-order.<akkaunt>.workers.dev"
   //  - PHP hosting: "api/send.php"
-  orderEndpoint: "api/send.php",
+  orderEndpoint: "",
 
   // Showroom — address bo'sh bo'lsa bo'lim ko'rinmaydi va formada "Showroomga tashrif" varianti yashiriladi
   showroom: {
-    address: { uz: "", ru: "", en: "" },       // masalan: "Toshkent, Yunusobod tumani, ... ko'chasi 12"
-    landmark: { uz: "", ru: "", en: "" },      // mo'ljal, masalan: "Mega Planet yonida"
-    hours: { uz: "", ru: "", en: "" },         // masalan: "Du–Sha: 10:00–19:00"
-    lat: null, lng: null,                      // xarita uchun koordinata, masalan 41.3645, 69.2881
-    mapLink: ""                                // Yandex/Google xarita havolasi
+    address: { uz: "Toshkent, Olmazor tumani, Qiziltut ko'chasi, 51", ru: "Ташкент, Алмазарский район, ул. Кызылтут, 51", en: "51 Qiziltut St, Olmazor district, Tashkent" },
+    landmark: { uz: "Chorsu metrosi yaqinida", ru: "Рядом с метро Чорсу", en: "Near Chorsu metro station" },
+    hours: { uz: "10:00 – 22:00", ru: "10:00 – 22:00", en: "10:00 am – 10:00 pm" },
+    lat: 41.326849, lng: 69.229467,
+    mapLink: "https://yandex.uz/maps/10335/tashkent/house/qiziltut_ko_chasi_51/YkAYdAVpTUMAQFprfX9zd3RnbQ==/?ll=69.229467%2C41.326850&z=17"
   },
 
   hero: {
@@ -161,7 +167,7 @@ window.SITE = {
 /* Interfeys matnlari */
 window.UI = {
   uz: {
-    nav: ["Liboslar", "Hunar", "Brend haqida", "Buyurtma"],
+    nav: ["Do'kon", "Kolleksiya", "Brend haqida", "Showroom", "Aloqa"],
     order: "Buyurtma berish", seeCollection: "Kolleksiyani ko'rish", swipe: "← Suring →",
     looksEyebrow: "Kolleksiya", looksTitle: "Liboslar", looksLead: "Siz uchun qaysi libos?",
     craftEyebrow: "Hunar", craftTitle: "Har bir chok — qo'lda",
@@ -181,7 +187,7 @@ window.UI = {
     footMeta: "O'zbekiston", close: "Yopish", prev: "Oldingi", next: "Keyingi", sound: "Ovoz", menu: "Menyu"
   },
   ru: {
-    nav: ["Коллекция", "Ремесло", "О бренде", "Заказ"],
+    nav: ["Магазин", "Коллекция", "О бренде", "Шоурум", "Контакты"],
     order: "Заказать", seeCollection: "Смотреть коллекцию", swipe: "← Листайте →",
     looksEyebrow: "Коллекция", looksTitle: "Платья", looksLead: "Какое платье для вас?",
     craftEyebrow: "Ремесло", craftTitle: "Каждый стежок — вручную",
@@ -201,7 +207,7 @@ window.UI = {
     footMeta: "Узбекистан", close: "Закрыть", prev: "Назад", next: "Вперёд", sound: "Звук", menu: "Меню"
   },
   en: {
-    nav: ["Collection", "Craft", "About", "Order"],
+    nav: ["Shop", "Collection", "About", "Showroom", "Contact"],
     order: "Order now", seeCollection: "View collection", swipe: "← Swipe →",
     looksEyebrow: "Collection", looksTitle: "Dresses", looksLead: "Which dress is yours?",
     craftEyebrow: "Craft", craftTitle: "Every stitch by hand",
@@ -299,3 +305,52 @@ window.SITE.samples = {
 window.UI.uz.sample = "Namuna";
 window.UI.ru.sample = "Пример";
 window.UI.en.sample = "Sample";
+
+/* Do'kon (mahsulotlar) va Telegram buyurtma matnlari */
+Object.assign(window.UI.uz, {
+  shopEyebrow: "Do'kon", shopTitle: "Mahsulotlar", shopLead: "Rang va o'lchamni tanlang — buyurtma Telegram orqali bir zumda.",
+  sum: "so'm", color: "Rang", size: "O'lcham", qty: "Soni", total: "Jami", off: "chegirma",
+  orderTg: "Telegram orqali buyurtma", chooseColor: "Rangni tanlang", chooseSize: "O'lchamni tanlang",
+  priceOnReq: "Narxi so'rov bo'yicha", details: "Batafsil",
+  orderHello: "Assalomu alaykum! Ushbu mahsulotga buyurtma bermoqchiman:",
+  consultHello: "Assalomu alaykum! Konsultatsiyaga yozilmoqchiman.",
+  tgOpened: "Telegram ochildi — xabarni yuboring. Matn chiqmasa, u nusxalandi: chatga joylashtiring.",
+  name: "Ism", phoneL: "Telefon", typeL: "Turi", lookL: "Libos"
+});
+Object.assign(window.UI.ru, {
+  shopEyebrow: "Магазин", shopTitle: "Товары", shopLead: "Выберите цвет и размер — заказ через Telegram в один клик.",
+  sum: "сум", color: "Цвет", size: "Размер", qty: "Количество", total: "Итого", off: "скидка",
+  orderTg: "Заказать в Telegram", chooseColor: "Выберите цвет", chooseSize: "Выберите размер",
+  priceOnReq: "Цена по запросу", details: "Подробнее",
+  orderHello: "Здравствуйте! Хочу заказать этот товар:",
+  consultHello: "Здравствуйте! Хочу записаться на консультацию.",
+  tgOpened: "Telegram открыт — отправьте сообщение. Если текста нет, он скопирован: вставьте его в чат.",
+  name: "Имя", phoneL: "Телефон", typeL: "Тип", lookL: "Платье"
+});
+Object.assign(window.UI.en, {
+  shopEyebrow: "Shop", shopTitle: "Products", shopLead: "Choose a colour and size — order instantly via Telegram.",
+  sum: "UZS", color: "Colour", size: "Size", qty: "Quantity", total: "Total", off: "off",
+  orderTg: "Order via Telegram", chooseColor: "Choose a colour", chooseSize: "Choose a size",
+  priceOnReq: "Price on request", details: "Details",
+  orderHello: "Hello! I'd like to order this item:",
+  consultHello: "Hello! I'd like to book a consultation.",
+  tgOpened: "Telegram is open — send the message. If the text is missing, it's copied: paste it into the chat.",
+  name: "Name", phoneL: "Phone", typeL: "Type", lookL: "Dress"
+});
+
+/* SEO: har bir til uchun sahifa sarlavhasi va tavsifi */
+Object.assign(window.UI.uz, {
+  metaTitle: "MUNIVAR — premium ayollar liboslari | Toshkent",
+  metaDesc: "MUNIVAR — premium ayollar liboslari: kechki liboslar, kapa va kashtali liboslar. O'lchov bo'yicha tikish, Telegram orqali buyurtma. Toshkent, Olmazor, Qiziltut ko'chasi 51.",
+  imgAlt: "MUNIVAR libosi"
+});
+Object.assign(window.UI.ru, {
+  metaTitle: "MUNIVAR — премиальная женская одежда | Ташкент",
+  metaDesc: "MUNIVAR — премиальные женские платья: вечерние платья, кейпы и платья с вышивкой. Пошив по меркам, заказ через Telegram. Ташкент, Алмазар, ул. Кызылтут 51.",
+  imgAlt: "Платье MUNIVAR"
+});
+Object.assign(window.UI.en, {
+  metaTitle: "MUNIVAR — premium womenswear | Tashkent",
+  metaDesc: "MUNIVAR — premium womenswear: evening dresses, capes and embroidered dresses. Made to measure, order via Telegram. 51 Qiziltut St, Tashkent.",
+  imgAlt: "MUNIVAR dress"
+});
