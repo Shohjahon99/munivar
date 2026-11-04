@@ -26,26 +26,15 @@
   <!-- KIRISH -->
   <section class="card login" id="login" hidden>
     <h1>Admin panelga kirish</h1>
-    <p class="muted">Mahsulotlar GitHub repozitoriyda saqlanadi. Kirish uchun GitHub token kerak — uni bir marta yaratasiz.</p>
+    <p class="muted">Mahsulotlarni qo'shish va tahrirlash uchun parolni kiriting.</p>
     <form id="loginForm">
-      <label class="f"><span>GitHub token</span>
-        <input type="password" id="token" autocomplete="off" placeholder="github_pat_..." required>
+      <label class="f"><span>Parol</span>
+        <input type="password" id="password" autocomplete="current-password" required autofocus>
       </label>
       <label class="check"><input type="checkbox" id="remember"> Shu qurilmada eslab qolish</label>
-      <button class="btn" type="submit">Kirish</button>
+      <button class="btn" type="submit" id="loginBtn">Kirish</button>
       <p class="msg" id="loginMsg"></p>
     </form>
-    <details class="help">
-      <summary>Token qanday olinadi?</summary>
-      <ol>
-        <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained token yaratish</a> sahifasini oching (Shohjahon99 akkauntidan).</li>
-        <li><b>Token name:</b> MUNIVAR admin. <b>Expiration:</b> 1 yil (yoki xohlagancha).</li>
-        <li><b>Repository access:</b> "Only select repositories" → <b>munivar</b>.</li>
-        <li><b>Permissions → Repository permissions → Contents:</b> <b>Read and write</b>.</li>
-        <li>"Generate token" ni bosing, chiqqan kodni nusxalab shu yerga qo'ying.</li>
-      </ol>
-      <p class="muted">Token faqat shu repozitoriyga kirish huquqiga ega. Uni hech kimga bermang.</p>
-    </details>
   </section>
 
   <!-- RO'YXAT -->

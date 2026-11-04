@@ -27,8 +27,9 @@
   };
 
   /* ---------- yuklash ---------- */
-  fetch('data/products.json', { cache: 'no-store' })
-    .then((r) => r.json())
+  // avval admin saqlagan ro'yxat (Supabase), bo'lmasa — saytdagi data/products.json
+  const getJson = (u) => fetch(u, { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  (S.productsUrl ? getJson(`${S.productsUrl}?t=${Date.now()}`).catch(() => getJson('data/products.json')) : getJson('data/products.json'))
     .then((d) => {
       products = (d.products || []).filter((p) => p.active !== false && (S.demo || !p.sample));
       MV.onRender(render);

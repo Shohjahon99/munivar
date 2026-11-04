@@ -37,6 +37,9 @@ window.SITE = {
   //  - PHP hosting: "api/send.php"
   orderEndpoint: "https://adjxdgfifzmepjrxdbte.supabase.co/functions/v1/munivar-order",
 
+  // Mahsulotlar (admin panel shu yerga saqlaydi). Topilmasa data/products.json ishlatiladi.
+  productsUrl: "https://adjxdgfifzmepjrxdbte.supabase.co/storage/v1/object/public/munivar/products.json",
+
   // Showroom — address bo'sh bo'lsa bo'lim ko'rinmaydi va formada "Showroomga tashrif" varianti yashiriladi
   showroom: {
     address: { uz: "Toshkent, Olmazor tumani, Qiziltut ko'chasi, 51", ru: "Ташкент, Алмазарский район, ул. Кызылтут, 51", en: "51 Qiziltut St, Olmazor district, Tashkent" },

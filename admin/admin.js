@@ -1,11 +1,13 @@
-/* MUNIVAR admin panel — mahsulotlarni GitHub repozitoriyda (data/products.json + media/products/) boshqaradi.
-   Har bir saqlash = bitta commit (Git Data API). GitHub Actions uni gh-pages ga ko'chiradi, sayt 1–2 daqiqada yangilanadi. */
+/* MUNIVAR admin panel — bitta parol bilan kiriladi.
+   Mahsulotlar va rasmlar Supabase Storage'da (bucket "munivar") saqlanadi, sayt ularni darhol ko'rsatadi.
+   Server: supabase/functions/munivar-admin (parol Supabase Secrets → ADMIN_PASSWORD). */
 (function () {
-  const REPO = { owner: 'Shohjahon99', repo: 'munivar', branch: 'main' };
-  const DATA_PATH = 'data/products.json';
-  const IMG_DIR = 'media/products';
+  const ADMIN_API = 'https://adjxdgfifzmepjrxdbte.supabase.co/functions/v1/munivar-admin';
+  const PUBLIC_BASE = 'https://adjxdgfifzmepjrxdbte.supabase.co/storage/v1/object/public/munivar/';
+  const LOCAL_DATA = '../data/products.json';   // Supabase'da hali ro'yxat bo'lmasa — boshlang'ich ma'lumot
+  const IMG_DIR = 'products';
   const IMG_MAX_W = 1200;
-  const TOKEN_KEY = 'munivar_admin_token';
+  const TOKEN_KEY = 'munivar_admin_session';
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -25,51 +27,41 @@
     clear() { try { sessionStorage.removeItem(TOKEN_KEY); localStorage.removeItem(TOKEN_KEY); } catch (e) {} }
   };
 
-  /* ---------- GitHub API ---------- */
-  async function gh(path, opts = {}) {
-    const r = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.repo}${path}`, {
-      ...opts,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.body ? { 'Content-Type': 'application/json' } : {}) }
+  /* ---------- server (Supabase funksiyasi) ---------- */
+  async function api(action, body = {}) {
+    const r = await fetch(ADMIN_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      body: JSON.stringify({ action, ...body })
     });
-    if (!r.ok) {
-      const j = await r.json().catch(() => ({}));
-      const e = new Error(j.message || `HTTP ${r.status}`);
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) {
+      const e = new Error(j.error || `HTTP ${r.status}`);
       e.status = r.status;
+      e.code = j.error;
       throw e;
     }
-    return r.status === 204 ? null : r.json();
+    return j;
   }
-  const b64ToText = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\n/g, '')), (c) => c.charCodeAt(0)));
   const blobToB64 = (blob) => new Promise((res, rej) => {
     const fr = new FileReader();
     fr.onload = () => res(String(fr.result).split(',')[1]);
     fr.onerror = rej;
     fr.readAsDataURL(blob);
   });
+  const getJson = (u) => fetch(u, { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
 
   async function loadData() {
-    const f = await gh(`/contents/${DATA_PATH}?ref=${REPO.branch}`);
-    data = JSON.parse(b64ToText(f.content));
+    data = await getJson(`${PUBLIC_BASE}products.json?t=${Date.now()}`).catch(() => getJson(LOCAL_DATA));
     if (!Array.isArray(data.products)) data.products = [];
   }
 
-  /** Bitta commit: products.json + yangi rasmlar (+ o'chirilgan rasmlar) */
+  /** Saqlash: products.json + yangi rasmlar (+ o'chirilgan rasmlar) — bitta so'rov */
   async function commit(message, newImages = [], deletePaths = []) {
-    const ref = await gh(`/git/ref/heads/${REPO.branch}`);
-    const headSha = ref.object.sha;
-    const head = await gh(`/git/commits/${headSha}`);
-    const tree = [];
-    for (const img of newImages) {
-      const blob = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: await blobToB64(img.blob), encoding: 'base64' }) });
-      tree.push({ path: img.path, mode: '100644', type: 'blob', sha: blob.sha });
-    }
-    const json = JSON.stringify(data, null, 2) + '\n';
-    const jb = await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: json, encoding: 'utf-8' }) });
-    tree.push({ path: DATA_PATH, mode: '100644', type: 'blob', sha: jb.sha });
-    deletePaths.filter((p) => p.startsWith(IMG_DIR + '/')).forEach((p) => tree.push({ path: p, mode: '100644', type: 'blob', sha: null }));
-    const t = await gh('/git/trees', { method: 'POST', body: JSON.stringify({ base_tree: head.tree.sha, tree }) });
-    const c = await gh('/git/commits', { method: 'POST', body: JSON.stringify({ message, tree: t.sha, parents: [headSha] }) });
-    await gh(`/git/refs/heads/${REPO.branch}`, { method: 'PATCH', body: JSON.stringify({ sha: c.sha }) });
+    const images = [];
+    for (const img of newImages) images.push({ path: img.path, type: 'image/webp', b64: await blobToB64(img.blob) });
+    const del = deletePaths.filter((u) => u.startsWith(PUBLIC_BASE)).map((u) => u.slice(PUBLIC_BASE.length));
+    await api('save', { message, data, images, delete: del });
   }
 
   /* ---------- rasmni kichraytirish (webp) ---------- */
@@ -108,43 +100,49 @@
   }
   const imgUrl = (p) => (/^https?:/.test(p) ? p : `../${p}`);
   const errText = (e) =>
-    e.status === 401 ? 'Token noto\'g\'ri yoki muddati tugagan.' :
-    e.status === 403 || e.status === 404 ? 'Token bu repozitoriyga yozish huquqiga ega emas (Contents: Read and write kerak).' :
-    e.status === 409 || e.status === 422 ? 'Repozitoriy shu payt o\'zgargan — sahifani yangilab, qayta urinib ko\'ring.' :
+    e.code === 'password' ? 'Parol noto\'g\'ri.' :
+    e.code === 'session' ? 'Kirish muddati tugagan — parolni qayta kiriting.' :
+    e.code === 'config' ? 'Server sozlanmagan: Supabase\'da ADMIN_PASSWORD kiritilmagan.' :
+    e.code === 'image_size' ? 'Rasm juda katta (5 MB dan oshmasin).' :
+    e.status === 0 || e instanceof TypeError ? 'Internet bilan aloqa yo\'q — qayta urinib ko\'ring.' :
     `Xatolik: ${e.message}`;
+  const logoutWith = (text) => {
+    store.clear(); token = ''; show('login');
+    if (text) { $('#loginMsg').className = 'msg err'; $('#loginMsg').textContent = text; }
+  };
 
   /* ---------- kirish ---------- */
   $('#loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const t = $('#token').value.trim();
+    const pw = $('#password').value;
     const msg = $('#loginMsg');
-    if (!t) return;
-    token = t;
+    if (!pw) return;
     msg.className = 'msg';
     msg.textContent = 'Tekshirilmoqda…';
+    $('#loginBtn').disabled = true;
     try {
-      const repo = await gh('');
-      if (!repo.permissions || !repo.permissions.push) throw Object.assign(new Error('perm'), { status: 403 });
-      store.set(t, $('#remember').checked);
-      $('#token').value = '';
+      token = '';
+      const j = await api('login', { password: pw });
+      token = j.token;
+      store.set(token, $('#remember').checked);
+      $('#password').value = '';
       msg.textContent = '';
       await openList();
     } catch (err) {
       token = '';
       msg.className = 'msg err';
       msg.textContent = errText(err);
+    } finally {
+      $('#loginBtn').disabled = false;
     }
   });
-  $('#logout').onclick = () => { store.clear(); token = ''; show('login'); };
+  $('#logout').onclick = () => logoutWith('');
 
   /* ---------- ro'yxat ---------- */
   async function openList(reload = true) {
     if (reload) {
       show('loading');
-      try { await loadData(); } catch (err) {
-        if (err.status === 401) { store.clear(); show('login'); $('#loginMsg').className = 'msg err'; $('#loginMsg').textContent = errText(err); return; }
-        toast(errText(err), true);
-      }
+      try { await loadData(); } catch (err) { toast(errText(err), true); }
     }
     renderList();
     show('listView');
@@ -192,8 +190,11 @@
     $$('#plist button').forEach((x) => (x.disabled = true));
     try {
       await commit(`Admin: ${message}`);
-      toast('Saqlandi. Saytda 1–2 daqiqada ko\'rinadi.');
-    } catch (err) { toast(errText(err), true); }
+      toast('Saqlandi — saytda darhol ko\'rinadi.');
+    } catch (err) {
+      if (err.code === 'session') return logoutWith(errText(err));
+      toast(errText(err), true);
+    }
     await openList();
   }
 
@@ -303,7 +304,7 @@
       if (s.path) return s.path;
       const path = `${IMG_DIR}/${p.id}-${i + 1}-${rnd()}.webp`;
       newImages.push({ path, blob: s.blob });
-      return path;
+      return PUBLIC_BASE + path;
     });
     const removed = oldImages.filter((x) => !p.images.includes(x));
 
@@ -315,9 +316,10 @@
     msg.textContent = 'Saqlanmoqda…';
     try {
       await commit(`Admin: ${isNew ? 'yangi mahsulot' : 'tahrirlandi'} — ${nameUz}`, newImages, removed);
-      toast('Saqlandi. Saytda 1–2 daqiqada ko\'rinadi.');
+      toast('Saqlandi — saytda darhol ko\'rinadi.');
       await openList();
     } catch (err) {
+      if (err.code === 'session') return logoutWith(errText(err));
       msg.className = 'msg err';
       msg.textContent = errText(err);
       await loadData().catch(() => {});
@@ -335,6 +337,7 @@
       toast('O\'chirildi.');
       await openList();
     } catch (err) {
+      if (err.code === 'session') return logoutWith(errText(err));
       toast(errText(err), true);
       await openList();
     } finally {
@@ -344,5 +347,9 @@
 
   /* ---------- start ---------- */
   token = store.get();
-  if (token) openList(); else show('login');
+  if (!token) show('login');
+  else {
+    show('loading');
+    api('ping').then(() => openList()).catch((err) => logoutWith(err.code === 'session' ? errText(err) : ''));
+  }
 })();
