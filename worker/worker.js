@@ -1,7 +1,7 @@
 // MUNIVAR — ariza formasini Telegram'ga yuboruvchi Cloudflare Worker.
 // Maxfiy qiymatlar (Cloudflare → Worker → Settings → Variables and Secrets):
 //   BOT_TOKEN — @BotFather bergan token
-//   CHAT_ID   — arizalar keladigan chat/guruh ID
+//   CHAT_ID   — buyurtmalar keladigan Telegram guruh ID si (masalan -1001234567890); bot guruhga qo'shilgan bo'lishi kerak
 // ALLOWED_ORIGINS — vergul bilan ajratilgan sayt manzillari (wrangler.toml da)
 
 export default {
@@ -77,11 +77,18 @@ export default {
         `🕒 ${time}`;
     }
 
-    const tg = await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`, {
+    const send = (chatId) => fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: env.CHAT_ID, text, parse_mode: 'HTML', disable_web_page_preview: true })
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true })
     });
+    let tg = await send(env.CHAT_ID);
+    if (!tg.ok) {
+      // guruh supergroup ga aylangan bo'lsa, Telegram yangi ID ni qaytaradi — o'sha ID ga qayta yuboramiz
+      const err = await tg.json().catch(() => ({}));
+      const newId = err.parameters && err.parameters.migrate_to_chat_id;
+      if (newId) tg = await send(newId);
+    }
     if (!tg.ok) return json({ ok: false, error: 'telegram' }, 502);
     return json({ ok: true });
   }
