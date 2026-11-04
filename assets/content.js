@@ -19,7 +19,7 @@ window.SITE = {
   },
 
   // Saytning internetdagi manzili (SEO, ulashish havolalari uchun). Domen ulansa shu yer o'zgaradi.
-  siteUrl: "https://shohjahon99.github.io/munivar/",
+  siteUrl: "https://munivar.uz/",
 
   contacts: {
     phones: ["+998 90 126 25 80", "+998 98 126 25 80"],

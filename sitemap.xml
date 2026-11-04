@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://shohjahon99.github.io/munivar/</loc>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://shohjahon99.github.io/munivar/?lang=uz"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://shohjahon99.github.io/munivar/?lang=ru"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://shohjahon99.github.io/munivar/?lang=en"/>
+    <loc>https://munivar.uz/</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://munivar.uz/?lang=uz"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://munivar.uz/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://munivar.uz/?lang=en"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://shohjahon99.github.io/munivar/?lang=ru</loc>
+    <loc>https://munivar.uz/?lang=ru</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shohjahon99.github.io/munivar/?lang=en</loc>
+    <loc>https://munivar.uz/?lang=en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
