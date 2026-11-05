@@ -10,7 +10,7 @@ const BUCKET = 'munivar';
 const DATA_PATH = 'products.json';
 const IMG_PREFIX = 'products/';
 const SESSION_HOURS = 12;
-const DEFAULT_ORIGINS = 'https://munivar.uz,https://www.munivar.uz,https://munivar.vercel.app,https://shohjahon99.github.io,http://localhost:5180';
+const DEFAULT_ORIGINS = 'https://munivar.uz,https://www.munivar.uz,http://munivar.uz,http://www.munivar.uz,https://munivar.vercel.app,https://shohjahon99.github.io,http://localhost:5180';
 
 type Env = { ADMIN_PASSWORD?: string; SUPABASE_URL?: string; SUPABASE_SERVICE_ROLE_KEY?: string; ALLOWED_ORIGINS?: string };
 
